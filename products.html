@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products – Top Space Ventures</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:        #1A3C6E;
+      --blue-mid:    #2457A4;
+      --blue-light:  #EAF0FB;
+      --orange:      #E8711A;
+      --orange-dark: #C45A0E;
+      --orange-light:#FFF3E8;
+      --white:       #FFFFFF;
+      --grey-100:    #F5F7FA;
+      --grey-300:    #D1D9E6;
+      --grey-600:    #5A6478;
+      --text:        #1B2435;
+      --radius:      8px;
+      --shadow:      0 4px 24px rgba(26,60,110,.12);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Utility ── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .btn-primary {
+      display: inline-block; background: var(--orange); color: var(--white);
+      padding: 12px 28px; border-radius: var(--radius); font-weight: 700;
+      font-size: .95rem; transition: background .2s, transform .15s; border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--orange-dark); transform: translateY(-1px); }
+    .btn-outline-blue {
+      display: inline-block; border: 2px solid var(--blue); color: var(--blue);
+      padding: 10px 24px; border-radius: var(--radius); font-weight: 700;
+      font-size: .9rem; transition: background .2s, color .2s;
+    }
+    .btn-outline-blue:hover { background: var(--blue); color: var(--white); }
+    .section-label {
+      display: inline-block; background: var(--orange-light); color: var(--orange);
+      font-weight: 700; font-size: .78rem; letter-spacing: .08em;
+      text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 10px;
+    }
+    .section-title { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800; color: var(--blue); line-height: 1.2; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--blue); box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between; height: 68px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .nav-logo .logo-mark {
+      width: 42px; height: 42px; background: var(--orange); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo .logo-mark svg { width: 24px; height: 24px; fill: var(--white); }
+    .nav-logo .logo-text { color: var(--white); font-weight: 800; font-size: 1.15rem; line-height: 1.1; }
+    .nav-logo .logo-text span { display: block; font-weight: 400; font-size: .72rem; letter-spacing: .06em; opacity: .8; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,.75); font-size: .93rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--orange); }
+    .nav-cta { background: var(--orange); color: var(--white); padding: 9px 22px; border-radius: var(--radius); font-weight: 700; font-size: .9rem; transition: background .2s; }
+    .nav-cta:hover { background: var(--orange-dark); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-toggle span { display: block; width: 26px; height: 2px; background: var(--white); border-radius: 2px; }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: linear-gradient(135deg, var(--blue) 55%, var(--blue-mid) 100%);
+      padding: 64px 0 56px; text-align: center;
+    }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--white); margin-bottom: 12px; }
+    .page-hero h1 em { color: var(--orange); font-style: normal; }
+    .page-hero p { color: rgba(255,255,255,.8); font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+    .breadcrumb { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; font-size: .85rem; color: rgba(255,255,255,.55); }
+    .breadcrumb a { color: rgba(255,255,255,.7); }
+    .breadcrumb a:hover { color: var(--orange); }
+    .breadcrumb .sep { opacity: .4; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar { background: var(--white); border-bottom: 1px solid var(--grey-300); position: sticky; top: 68px; z-index: 90; }
+    .filter-inner { display: flex; align-items: center; gap: 10px; padding: 14px 0; flex-wrap: wrap; }
+    .filter-label { font-size: .82rem; font-weight: 700; color: var(--grey-600); text-transform: uppercase; letter-spacing: .05em; margin-right: 4px; }
+    .filter-btn {
+      padding: 7px 18px; border-radius: 20px; font-size: .85rem; font-weight: 600;
+      border: 1.5px solid var(--grey-300); background: var(--white); color: var(--grey-600);
+      cursor: pointer; transition: all .2s;
+    }
+    .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .filter-btn.active { background: var(--blue); color: var(--white); border-color: var(--blue); }
+    .filter-count { margin-left: auto; font-size: .82rem; color: var(--grey-600); }
+
+    /* ── PRODUCT CATALOG ── */
+    .catalog { padding: 56px 0 96px; background: var(--grey-100); }
+
+    /* Category header */
+    .cat-header {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 28px; margin-top: 48px;
+    }
+    .cat-header:first-of-type { margin-top: 0; }
+    .cat-line { flex: 1; height: 2px; background: var(--grey-300); }
+    .cat-title {
+      white-space: nowrap; font-size: 1.1rem; font-weight: 800; color: var(--blue);
+      background: var(--grey-100); padding: 0 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .cat-badge {
+      background: var(--blue); color: var(--white);
+      font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 10px;
+    }
+
+    /* Product grid */
+    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+    .product-card {
+      background: var(--white); border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--grey-300); transition: transform .2s, box-shadow .2s;
+      display: flex; flex-direction: column;
+    }
+    .product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .product-card.featured { border: 2px solid var(--orange); }
+    .featured-badge {
+      background: var(--orange); color: var(--white);
+      font-size: .72rem; font-weight: 700; padding: 4px 12px;
+      text-align: center; letter-spacing: .04em; text-transform: uppercase;
+    }
+
+    .card-visual {
+      height: 180px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .card-visual svg { width: 100%; height: 100%; }
+    .bg-blue-soft  { background: linear-gradient(145deg, #EAF0FB, #d4e2f8); }
+    .bg-orange-soft{ background: linear-gradient(145deg, #FFF3E8, #fde0c2); }
+    .bg-grey-soft  { background: linear-gradient(145deg, #E8EDF5, #d8e0ef); }
+    .bg-navy-soft  { background: linear-gradient(145deg, #dce5f5, #c8d6ef); }
+
+    .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .card-body h3 { font-size: 1.05rem; font-weight: 800; color: var(--blue); margin-bottom: 6px; }
+    .card-body .desc { color: var(--grey-600); font-size: .88rem; margin-bottom: 14px; flex: 1; }
+
+    .specs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+    .spec { background: var(--grey-100); border-radius: 6px; padding: 8px 10px; }
+    .spec .spec-lbl { font-size: .7rem; color: var(--grey-600); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+    .spec .spec-val { font-size: .85rem; font-weight: 700; color: var(--blue); }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .tag {
+      font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 10px;
+    }
+    .tag-blue   { background: var(--blue-light); color: var(--blue-mid); }
+    .tag-orange { background: var(--orange-light); color: var(--orange-dark); }
+    .tag-grey   { background: #E8EDF5; color: #3A4A6A; }
+
+    .card-footer {
+      padding: 14px 20px; border-top: 1px solid var(--grey-300);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--grey-100);
+    }
+    .card-footer .price { font-size: .82rem; color: var(--grey-600); }
+    .card-footer .price strong { color: var(--orange); font-size: 1rem; font-weight: 800; }
+
+    /* ── COMPARISON TABLE ── */
+    .compare { padding: 80px 0; background: var(--white); }
+    .compare-header { text-align: center; margin-bottom: 40px; }
+    .compare-header .section-sub { color: var(--grey-600); margin: 10px auto 0; max-width: 500px; }
+
+    .table-wrap { overflow-x: auto; border-radius: 12px; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; background: var(--white); }
+    thead tr { background: var(--blue); color: var(--white); }
+    thead th { padding: 16px 20px; text-align: left; font-size: .88rem; font-weight: 700; }
+    thead th:first-child { width: 220px; }
+    tbody tr:nth-child(even) { background: var(--grey-100); }
+    tbody tr:hover { background: var(--blue-light); }
+    tbody td { padding: 14px 20px; font-size: .9rem; border-bottom: 1px solid var(--grey-300); }
+    tbody td:first-child { font-weight: 700; color: var(--blue); }
+    .check { color: #22C55E; font-size: 1.1rem; }
+    .cross { color: #CBD5E1; font-size: 1.1rem; }
+    .partial { color: var(--orange); font-size: .85rem; font-weight: 600; }
+
+    /* ── CUSTOM ORDER CTA ── */
+    .custom-cta {
+      background: linear-gradient(135deg, var(--blue) 0%, #0F2547 100%);
+      padding: 80px 0; text-align: center;
+    }
+    .custom-cta h2 { color: var(--white); font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; margin-bottom: 14px; }
+    .custom-cta p  { color: rgba(255,255,255,.78); max-width: 560px; margin: 0 auto 32px; font-size: 1.02rem; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-white { display: inline-block; background: var(--white); color: var(--blue); padding: 14px 32px; border-radius: var(--radius); font-weight: 800; font-size: 1rem; transition: background .2s; }
+    .btn-white:hover { background: var(--blue-light); }
+    .btn-outline-white { display: inline-block; border: 2px solid var(--white); color: var(--white); padding: 12px 28px; border-radius: var(--radius); font-weight: 700; font-size: 1rem; transition: background .2s; }
+    .btn-outline-white:hover { background: rgba(255,255,255,.1); }
+
+    /* ── FOOTER ── */
+    footer { background: #0F2547; color: rgba(255,255,255,.7); padding: 40px 0 24px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: .82rem; }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,.55); transition: color .2s; }
+    .footer-links a:hover { color: var(--orange); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .product-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .product-grid { grid-template-columns: 1fr; }
+      .specs { grid-template-columns: 1fr 1fr; }
+      nav.open .nav-links { display: flex; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--blue); padding: 16px 24px; gap: 16px; border-top: 1px solid rgba(255,255,255,.1); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M3 3h18v3H3V3zm0 5h18v2H3V8zm0 4h18v2H3v-2zm0 4h12v2H3v-2zm14 1l4-4v8l-4-4z"/></svg>
+      </div>
+      <div class="logo-text">
+        Top Space Ventures
+        <span>Storage Racking Solutions</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html" class="active">Products</a></li>
+      <li><a href="index.html#how-it-works">How It Works</a></li>
+      <li><a href="index.html#why-us">Why Us</a></li>
+      <li><a href="index.html#heavy-duty">Heavy Duty</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="nav-cta">Get a Quote</a>
+    <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- ══════════ PAGE HERO ══════════ -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">›</span>
+      <span>Products</span>
+    </div>
+    <h1>Our <em>Product</em> Catalogue</h1>
+    <p>Browse our full range of boltless racks, gondola shelving, and heavy-duty racking systems — all available for custom sizing and bulk orders.</p>
+  </div>
+</section>
+
+<!-- ══════════ FILTER BAR ══════════ -->
+<div class="filter-bar" id="filterBar">
+  <div class="container filter-inner">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" data-filter="all">All Products</button>
+    <button class="filter-btn" data-filter="boltless">Boltless Rack</button>
+    <button class="filter-btn" data-filter="gondola">Gondola</button>
+    <button class="filter-btn" data-filter="heavy">Heavy Duty</button>
+    <button class="filter-btn" data-filter="accessories">Accessories</button>
+    <span class="filter-count" id="filterCount">Showing all 13 products</span>
+  </div>
+</div>
+
+<!-- ══════════ CATALOGUE ══════════ -->
+<main class="catalog">
+  <div class="container">
+
+    <!-- ─── BOLTLESS RACKS ─── -->
+    <div class="cat-header" data-cat="boltless">
+      <div class="cat-line"></div>
+      <div class="cat-title">🗄️ Boltless Shelving Rack <span class="cat-badge">5 Products</span></div>
+      <div class="cat-line"></div>
+    </div>
+    <div class="product-grid">
+
+      <!-- Boltless 1 -->
+      <div class="product-card featured" data-cat="boltless">
+        <div class="featured-badge">Best Seller</div>
+        <div class="card-visual bg-blue-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <rect x="30" y="20" width="10" height="140" rx="3" fill="#2457A4"/>
+            <rect x="260" y="20" width="10" height="140" rx="3" fill="#2457A4"/>
+            <rect x="30" y="25" width="240" height="8" rx="2" fill="#1A3C6E"/>
+            <rect x="30" y="68" width="240" height="8" rx="2" fill="#1A3C6E"/>
+            <rect x="30" y="111" width="240" height="8" rx="2" fill="#1A3C6E"/>
+            <rect x="30" y="154" width="240" height="8" rx="2" fill="#1A3C6E"/>
+            <rect x="45" y="38" width="50" height="25" rx="3" fill="#E8711A" opacity=".7"/>
+            <rect x="102" y="34" width="40" height="29" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="149" y="38" width="55" height="25" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="211" y="36" width="38" height="27" rx="3" fill="#2457A4" opacity=".7"/>
+            <rect x="45" y="81" width="60" height="24" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="112" y="78" width="45" height="27" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="164" y="81" width="50" height="24" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="45" y="124" width="55" height="24" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="107" y="121" width="60" height="27" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="174" y="124" width="40" height="24" rx="3" fill="#E8711A" opacity=".7"/>
+            <rect x="221" y="122" width="30" height="26" rx="3" fill="#2457A4" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Standard Boltless Rack (4 Tier)</h3>
+          <p class="desc">Our most popular model. No tools needed — snap-fit steel beams assemble in minutes. Ideal for storerooms, offices, and warehouses.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Width</div><div class="spec-val">900 / 1200mm</div></div>
+            <div class="spec"><div class="spec-lbl">Depth</div><div class="spec-val">450 / 600mm</div></div>
+            <div class="spec"><div class="spec-lbl">Height</div><div class="spec-val">1800mm</div></div>
+            <div class="spec"><div class="spec-lbl">Load / Shelf</div><div class="spec-val">200 kg</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-blue">No Tools</span>
+            <span class="tag tag-blue">Adjustable</span>
+            <span class="tag tag-orange">Storeroom</span>
+            <span class="tag tag-grey">Powder Coated</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">From <strong>RM 180</strong> / unit</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+      <!-- Boltless 2 -->
+      <div class="product-card" data-cat="boltless">
+        <div class="card-visual bg-blue-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <rect x="30" y="10" width="10" height="160" rx="3" fill="#2457A4"/>
+            <rect x="260" y="10" width="10" height="160" rx="3" fill="#2457A4"/>
+            <rect x="30" y="15" width="240" height="7" rx="2" fill="#1A3C6E"/>
+            <rect x="30" y="48" width="240" height="7" rx="2" fill="#1A3C6E"/>
+            <rect x="30" y="81" width="240" height="7" rx="2" fill="#1A3C6E"/>
+            <rect x="30" y="114" width="240" height="7" rx="2" fill="#1A3C6E"/>
+            <rect x="30" y="147" width="240" height="7" rx="2" fill="#1A3C6E"/>
+            <rect x="30" y="162" width="240" height="7" rx="2" fill="#1A3C6E"/>
+            <rect x="45" y="25" width="45" height="20" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="98" y="23" width="50" height="22" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="155" y="25" width="40" height="20" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="203" y="22" width="50" height="23" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="45" y="58" width="55" height="20" rx="3" fill="#2457A4" opacity=".4"/>
+            <rect x="108" y="56" width="40" height="22" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="156" y="58" width="50" height="20" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="45" y="91" width="40" height="20" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="93" y="89" width="55" height="22" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="156" y="91" width="45" height="20" rx="3" fill="#E8711A" opacity=".4"/>
+            <rect x="45" y="124" width="50" height="20" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="103" y="122" width="40" height="22" rx="3" fill="#E8711A" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Tall Boltless Rack (6 Tier)</h3>
+          <p class="desc">Maximise vertical space with 6 adjustable shelves. Great for high-ceiling warehouses and stock rooms needing dense storage.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Width</div><div class="spec-val">900 / 1200mm</div></div>
+            <div class="spec"><div class="spec-lbl">Depth</div><div class="spec-val">450 / 600mm</div></div>
+            <div class="spec"><div class="spec-lbl">Height</div><div class="spec-val">2400mm</div></div>
+            <div class="spec"><div class="spec-lbl">Load / Shelf</div><div class="spec-val">200 kg</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-blue">6 Shelves</span>
+            <span class="tag tag-blue">High Ceiling</span>
+            <span class="tag tag-grey">Warehouse</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">From <strong>RM 250</strong> / unit</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+      <!-- Boltless 3 -->
+      <div class="product-card" data-cat="boltless">
+        <div class="card-visual bg-navy-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Compact narrow rack -->
+            <rect x="70" y="15" width="10" height="150" rx="3" fill="#2457A4"/>
+            <rect x="220" y="15" width="10" height="150" rx="3" fill="#2457A4"/>
+            <rect x="70" y="20" width="160" height="8" rx="2" fill="#1A3C6E"/>
+            <rect x="70" y="58" width="160" height="8" rx="2" fill="#1A3C6E"/>
+            <rect x="70" y="96" width="160" height="8" rx="2" fill="#1A3C6E"/>
+            <rect x="70" y="134" width="160" height="8" rx="2" fill="#1A3C6E"/>
+            <rect x="70" y="157" width="160" height="8" rx="2" fill="#1A3C6E"/>
+            <rect x="82" y="32" width="35" height="22" rx="3" fill="#E8711A" opacity=".65"/>
+            <rect x="123" y="30" width="40" height="24" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="169" y="32" width="38" height="22" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="82" y="70" width="40" height="22" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="128" y="68" width="35" height="24" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="170" y="70" width="38" height="22" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="82" y="108" width="38" height="22" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="127" y="106" width="40" height="24" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="174" y="108" width="34" height="22" rx="3" fill="#E8711A" opacity=".55"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Narrow / Compact Rack</h3>
+          <p class="desc">Designed for tight spaces — corridor storerooms, small retail back rooms, and home storage. Same durable build, smaller footprint.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Width</div><div class="spec-val">600mm</div></div>
+            <div class="spec"><div class="spec-lbl">Depth</div><div class="spec-val">300 / 400mm</div></div>
+            <div class="spec"><div class="spec-lbl">Height</div><div class="spec-val">1500 / 1800mm</div></div>
+            <div class="spec"><div class="spec-lbl">Load / Shelf</div><div class="spec-val">100 kg</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-orange">Compact</span>
+            <span class="tag tag-blue">Home Use</span>
+            <span class="tag tag-grey">Small Retail</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">From <strong>RM 130</strong> / unit</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+      <!-- Boltless 4 -->
+      <div class="product-card" data-cat="boltless">
+        <div class="card-visual bg-blue-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Wire deck rack -->
+            <rect x="25" y="20" width="10" height="145" rx="3" fill="#1A3C6E"/>
+            <rect x="265" y="20" width="10" height="145" rx="3" fill="#1A3C6E"/>
+            <!-- Beams -->
+            <rect x="25" y="26" width="250" height="7" rx="2" fill="#2457A4"/>
+            <rect x="25" y="72" width="250" height="7" rx="2" fill="#2457A4"/>
+            <rect x="25" y="118" width="250" height="7" rx="2" fill="#2457A4"/>
+            <rect x="25" y="158" width="250" height="7" rx="2" fill="#2457A4"/>
+            <!-- Wire deck lines on shelf 1 -->
+            <line x1="60" y1="26" x2="60" y2="72" stroke="#2457A4" stroke-width="1.5" opacity=".4"/>
+            <line x1="95" y1="26" x2="95" y2="72" stroke="#2457A4" stroke-width="1.5" opacity=".4"/>
+            <line x1="130" y1="26" x2="130" y2="72" stroke="#2457A4" stroke-width="1.5" opacity=".4"/>
+            <line x1="165" y1="26" x2="165" y2="72" stroke="#2457A4" stroke-width="1.5" opacity=".4"/>
+            <line x1="200" y1="26" x2="200" y2="72" stroke="#2457A4" stroke-width="1.5" opacity=".4"/>
+            <line x1="235" y1="26" x2="235" y2="72" stroke="#2457A4" stroke-width="1.5" opacity=".4"/>
+            <!-- Items on wire shelf 2 -->
+            <rect x="38" y="85" width="55" height="28" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="101" y="82" width="60" height="31" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="169" y="85" width="50" height="28" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="227" y="83" width="35" height="30" rx="3" fill="#2457A4" opacity=".6"/>
+            <!-- Items on shelf 3 -->
+            <rect x="38" y="129" width="70" height="24" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="116" y="127" width="55" height="26" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="179" y="129" width="45" height="24" rx="3" fill="#2457A4" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Wire Deck Boltless Rack</h3>
+          <p class="desc">Open wire shelves allow air circulation and visibility — perfect for cold storage, perishable goods, and safety-compliance storage areas.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Width</div><div class="spec-val">900 / 1200mm</div></div>
+            <div class="spec"><div class="spec-lbl">Depth</div><div class="spec-val">450 / 600mm</div></div>
+            <div class="spec"><div class="spec-lbl">Height</div><div class="spec-val">1800 / 2100mm</div></div>
+            <div class="spec"><div class="spec-lbl">Load / Shelf</div><div class="spec-val">150 kg</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-blue">Wire Deck</span>
+            <span class="tag tag-blue">Ventilated</span>
+            <span class="tag tag-orange">Cold Storage</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">From <strong>RM 220</strong> / unit</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+      <!-- Boltless 5 -->
+      <div class="product-card" data-cat="boltless">
+        <div class="card-visual bg-grey-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Long span -->
+            <rect x="15" y="20" width="12" height="150" rx="3" fill="#1A3C6E"/>
+            <rect x="143" y="20" width="12" height="150" rx="3" fill="#1A3C6E"/>
+            <rect x="273" y="20" width="12" height="150" rx="3" fill="#1A3C6E"/>
+            <rect x="15" y="26" width="270" height="9" rx="2" fill="#2457A4"/>
+            <rect x="15" y="80" width="270" height="9" rx="2" fill="#2457A4"/>
+            <rect x="15" y="134" width="270" height="9" rx="2" fill="#2457A4"/>
+            <rect x="15" y="161" width="270" height="9" rx="2" fill="#2457A4"/>
+            <!-- Long items -->
+            <rect x="28" y="38" width="120" height="36" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="157" y="38" width="111" height="36" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="28" y="92" width="85" height="35" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="120" y="92" width="148" height="35" rx="3" fill="#E8711A" opacity=".45"/>
+            <rect x="28" y="146" width="100" height="28" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="135" y="146" width="133" height="28" rx="3" fill="#E8711A" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Long-Span Boltless Rack</h3>
+          <p class="desc">Extra-wide bays for long or bulky items — great for pipe storage, timber, carpet rolls, and oversized inventory.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Width</div><div class="spec-val">1500 – 2400mm</div></div>
+            <div class="spec"><div class="spec-lbl">Depth</div><div class="spec-val">600 – 900mm</div></div>
+            <div class="spec"><div class="spec-lbl">Height</div><div class="spec-val">1800 – 2700mm</div></div>
+            <div class="spec"><div class="spec-lbl">Load / Shelf</div><div class="spec-val">300 kg</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-blue">Long Span</span>
+            <span class="tag tag-orange">Bulky Items</span>
+            <span class="tag tag-grey">Industrial</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">From <strong>RM 350</strong> / unit</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+    </div><!-- /boltless grid -->
+
+    <!-- ─── GONDOLA SHELVING ─── -->
+    <div class="cat-header" data-cat="gondola">
+      <div class="cat-line"></div>
+      <div class="cat-title">🏪 Gondola Shelving <span class="cat-badge">4 Products</span></div>
+      <div class="cat-line"></div>
+    </div>
+    <div class="product-grid">
+
+      <!-- Gondola 1 -->
+      <div class="product-card featured" data-cat="gondola">
+        <div class="featured-badge">Most Popular</div>
+        <div class="card-visual bg-orange-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Double-sided gondola -->
+            <rect x="143" y="10" width="14" height="165" rx="3" fill="#1A3C6E"/>
+            <!-- Left side shelves -->
+            <rect x="30" y="18" width="113" height="7" rx="2" fill="#E8711A"/>
+            <rect x="30" y="55" width="113" height="7" rx="2" fill="#E8711A"/>
+            <rect x="30" y="92" width="113" height="7" rx="2" fill="#E8711A"/>
+            <rect x="30" y="129" width="113" height="7" rx="2" fill="#E8711A"/>
+            <rect x="30" y="166" width="113" height="7" rx="2" fill="#E8711A"/>
+            <!-- Left upright -->
+            <rect x="22" y="10" width="8" height="165" rx="3" fill="#C45A0E"/>
+            <!-- Left products -->
+            <rect x="33" y="28" width="28" height="24" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="65" y="26" width="24" height="26" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="93" y="28" width="28" height="24" rx="2" fill="#2457A4" opacity=".5"/>
+            <rect x="33" y="65" width="25" height="24" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="62" y="63" width="30" height="26" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="96" y="65" width="26" height="24" rx="2" fill="#E8711A" opacity=".5"/>
+            <rect x="33" y="102" width="28" height="24" rx="2" fill="#2457A4" opacity=".5"/>
+            <rect x="65" y="100" width="24" height="26" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="93" y="102" width="28" height="24" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="33" y="139" width="30" height="24" rx="2" fill="#E8711A" opacity=".5"/>
+            <rect x="67" y="137" width="28" height="26" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="99" y="139" width="26" height="24" rx="2" fill="#E8711A" opacity=".45"/>
+            <!-- Right side shelves -->
+            <rect x="157" y="18" width="113" height="7" rx="2" fill="#E8711A"/>
+            <rect x="157" y="55" width="113" height="7" rx="2" fill="#E8711A"/>
+            <rect x="157" y="92" width="113" height="7" rx="2" fill="#E8711A"/>
+            <rect x="157" y="129" width="113" height="7" rx="2" fill="#E8711A"/>
+            <rect x="157" y="166" width="113" height="7" rx="2" fill="#E8711A"/>
+            <!-- Right upright -->
+            <rect x="270" y="10" width="8" height="165" rx="3" fill="#C45A0E"/>
+            <!-- Right products -->
+            <rect x="160" y="28" width="28" height="24" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="192" y="26" width="24" height="26" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="220" y="28" width="28" height="24" rx="2" fill="#2457A4" opacity=".5"/>
+            <rect x="255" y="26" width="13" height="26" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="160" y="65" width="25" height="24" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="189" y="63" width="30" height="26" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="223" y="65" width="26" height="24" rx="2" fill="#E8711A" opacity=".5"/>
+            <rect x="253" y="63" width="15" height="26" rx="2" fill="#2457A4" opacity=".5"/>
+            <rect x="160" y="102" width="28" height="24" rx="2" fill="#2457A4" opacity=".5"/>
+            <rect x="192" y="100" width="24" height="26" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="220" y="102" width="30" height="24" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="160" y="139" width="30" height="24" rx="2" fill="#E8711A" opacity=".5"/>
+            <rect x="194" y="137" width="28" height="26" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="226" y="139" width="26" height="24" rx="2" fill="#E8711A" opacity=".45"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Double-Sided Gondola</h3>
+          <p class="desc">The retail industry standard. Back-to-back shelving that creates efficient aisles. Fully configurable with panels, hooks, and price rail accessories.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Width</div><div class="spec-val">900 / 1200mm</div></div>
+            <div class="spec"><div class="spec-lbl">Depth</div><div class="spec-val">2 × 370mm</div></div>
+            <div class="spec"><div class="spec-lbl">Height</div><div class="spec-val">1600 / 1800mm</div></div>
+            <div class="spec"><div class="spec-lbl">Load / Shelf</div><div class="spec-val">80 kg</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-orange">Double-Sided</span>
+            <span class="tag tag-orange">Retail Aisle</span>
+            <span class="tag tag-blue">Adjustable</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">From <strong>RM 480</strong> / bay</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+      <!-- Gondola 2 -->
+      <div class="product-card" data-cat="gondola">
+        <div class="card-visual bg-orange-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Wall-mounted single-sided gondola -->
+            <rect x="25" y="10" width="250" height="10" rx="3" fill="#1A3C6E"/>
+            <rect x="25" y="10" width="8" height="165" rx="3" fill="#1A3C6E"/>
+            <rect x="267" y="10" width="8" height="165" rx="3" fill="#1A3C6E"/>
+            <rect x="25" y="48" width="250" height="7" rx="2" fill="#E8711A"/>
+            <rect x="25" y="85" width="250" height="7" rx="2" fill="#E8711A"/>
+            <rect x="25" y="122" width="250" height="7" rx="2" fill="#E8711A"/>
+            <rect x="25" y="159" width="250" height="7" rx="2" fill="#E8711A"/>
+            <!-- Wall backing -->
+            <rect x="33" y="20" width="234" height="160" fill="#E8711A" opacity=".08"/>
+            <!-- Products -->
+            <rect x="38" y="26" width="28" height="18" rx="2" fill="#E8711A" opacity=".65"/>
+            <rect x="70" y="23" width="22" height="21" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="96" y="26" width="30" height="18" rx="2" fill="#E8711A" opacity=".5"/>
+            <rect x="130" y="24" width="25" height="20" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="159" y="26" width="28" height="18" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="191" y="23" width="22" height="21" rx="2" fill="#2457A4" opacity=".5"/>
+            <rect x="217" y="26" width="30" height="18" rx="2" fill="#E8711A" opacity=".45"/>
+            <rect x="38" y="58" width="30" height="22" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="72" y="56" width="25" height="24" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="101" y="58" width="28" height="22" rx="2" fill="#2457A4" opacity=".5"/>
+            <rect x="133" y="56" width="22" height="24" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="159" y="58" width="30" height="22" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="193" y="56" width="28" height="24" rx="2" fill="#E8711A" opacity=".5"/>
+            <rect x="225" y="58" width="22" height="22" rx="2" fill="#2457A4" opacity=".45"/>
+            <rect x="38" y="95" width="28" height="22" rx="2" fill="#E8711A" opacity=".5"/>
+            <rect x="70" y="93" width="30" height="24" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="104" y="95" width="22" height="22" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="130" y="93" width="30" height="24" rx="2" fill="#2457A4" opacity=".5"/>
+            <rect x="164" y="95" width="28" height="22" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="196" y="93" width="25" height="24" rx="2" fill="#2457A4" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Wall-Mounted Single-Sided Gondola</h3>
+          <p class="desc">Space-saving perimeter shelving that mounts to walls. Ideal for the edges of retail stores, pharmacies, and minimarkets.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Width</div><div class="spec-val">900 / 1200mm</div></div>
+            <div class="spec"><div class="spec-lbl">Depth</div><div class="spec-val">370mm</div></div>
+            <div class="spec"><div class="spec-lbl">Height</div><div class="spec-val">1600 / 2100mm</div></div>
+            <div class="spec"><div class="spec-lbl">Load / Shelf</div><div class="spec-val">80 kg</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-orange">Wall Mount</span>
+            <span class="tag tag-orange">Single-Sided</span>
+            <span class="tag tag-grey">Perimeter</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">From <strong>RM 320</strong> / bay</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+      <!-- Gondola 3 -->
+      <div class="product-card" data-cat="gondola">
+        <div class="card-visual bg-orange-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- End-cap gondola -->
+            <rect x="60" y="10" width="180" height="160" rx="6" fill="none" stroke="#E8711A" stroke-width="3"/>
+            <rect x="60" y="10" width="8" height="160" rx="3" fill="#C45A0E"/>
+            <rect x="232" y="10" width="8" height="160" rx="3" fill="#C45A0E"/>
+            <rect x="60" y="45" width="180" height="6" rx="2" fill="#E8711A"/>
+            <rect x="60" y="80" width="180" height="6" rx="2" fill="#E8711A"/>
+            <rect x="60" y="115" width="180" height="6" rx="2" fill="#E8711A"/>
+            <rect x="60" y="150" width="180" height="6" rx="2" fill="#E8711A"/>
+            <!-- Promotional display items -->
+            <rect x="75" y="18" width="50" height="24" rx="3" fill="#2457A4" opacity=".7"/>
+            <rect x="132" y="16" width="60" height="26" rx="3" fill="#E8711A" opacity=".65"/>
+            <rect x="75" y="53" width="45" height="24" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="126" y="51" width="55" height="26" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="189" y="53" width="34" height="24" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="75" y="88" width="55" height="24" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="136" y="86" width="45" height="26" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="187" y="88" width="36" height="24" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="75" y="123" width="50" height="24" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="131" y="121" width="55" height="26" rx="3" fill="#2457A4" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>End-Cap Gondola Display</h3>
+          <p class="desc">High-visibility aisle-end display unit for promotions and featured products. Drives impulse purchases at key store traffic points.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Width</div><div class="spec-val">900 / 1200mm</div></div>
+            <div class="spec"><div class="spec-lbl">Depth</div><div class="spec-val">370 / 450mm</div></div>
+            <div class="spec"><div class="spec-lbl">Height</div><div class="spec-val">1600 / 1800mm</div></div>
+            <div class="spec"><div class="spec-lbl">Load / Shelf</div><div class="spec-val">60 kg</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-orange">End Cap</span>
+            <span class="tag tag-orange">Promo Display</span>
+            <span class="tag tag-grey">High Visibility</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">From <strong>RM 380</strong> / unit</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+      <!-- Gondola 4 -->
+      <div class="product-card" data-cat="gondola">
+        <div class="card-visual bg-grey-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Refrigerated / Chiller shelf look -->
+            <rect x="25" y="8" width="250" height="164" rx="6" fill="#EAF0FB" stroke="#2457A4" stroke-width="2"/>
+            <rect x="25" y="8" width="10" height="164" rx="3" fill="#2457A4"/>
+            <rect x="265" y="8" width="10" height="164" rx="3" fill="#2457A4"/>
+            <rect x="25" y="8" width="250" height="10" rx="3" fill="#2457A4"/>
+            <rect x="25" y="162" width="250" height="10" rx="3" fill="#2457A4"/>
+            <rect x="25" y="50" width="250" height="5" rx="2" fill="#2457A4" opacity=".5"/>
+            <rect x="25" y="95" width="250" height="5" rx="2" fill="#2457A4" opacity=".5"/>
+            <rect x="25" y="140" width="250" height="5" rx="2" fill="#2457A4" opacity=".5"/>
+            <!-- Chiller items (bottles/boxes look) -->
+            <rect x="38" y="20" width="18" height="28" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="60" y="20" width="18" height="28" rx="3" fill="#2457A4" opacity=".4"/>
+            <rect x="82" y="20" width="18" height="28" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="104" y="20" width="18" height="28" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="126" y="20" width="18" height="28" rx="3" fill="#E8711A" opacity=".4"/>
+            <rect x="148" y="20" width="18" height="28" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="170" y="20" width="18" height="28" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="192" y="20" width="18" height="28" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="214" y="20" width="18" height="28" rx="3" fill="#2457A4" opacity=".4"/>
+            <rect x="236" y="20" width="18" height="28" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="38" y="60" width="18" height="30" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="60" y="60" width="18" height="30" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="82" y="60" width="18" height="30" rx="3" fill="#E8711A" opacity=".4"/>
+            <rect x="104" y="60" width="18" height="30" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="126" y="60" width="18" height="30" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="148" y="60" width="18" height="30" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="170" y="60" width="18" height="30" rx="3" fill="#2457A4" opacity=".45"/>
+            <rect x="192" y="60" width="18" height="30" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="214" y="60" width="18" height="30" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="236" y="60" width="18" height="30" rx="3" fill="#2457A4" opacity=".55"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Chiller / Refrigerated Gondola</h3>
+          <p class="desc">Purpose-built for supermarkets and convenience stores. Fully enclosed chiller display with glass panels and energy-efficient cooling compatibility.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Width</div><div class="spec-val">1250mm</div></div>
+            <div class="spec"><div class="spec-lbl">Depth</div><div class="spec-val">700mm</div></div>
+            <div class="spec"><div class="spec-lbl">Height</div><div class="spec-val">2000mm</div></div>
+            <div class="spec"><div class="spec-lbl">Temp Range</div><div class="spec-val">0°C – 8°C</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-blue">Chiller</span>
+            <span class="tag tag-orange">Supermarket</span>
+            <span class="tag tag-grey">Glass Door</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">Request Quote</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+    </div><!-- /gondola grid -->
+
+    <!-- ─── HEAVY DUTY ─── -->
+    <div class="cat-header" data-cat="heavy">
+      <div class="cat-line"></div>
+      <div class="cat-title">🏗️ Heavy Duty Racking <span class="cat-badge">3 Products</span></div>
+      <div class="cat-line"></div>
+    </div>
+    <div class="product-grid">
+
+      <!-- Heavy 1 -->
+      <div class="product-card featured" data-cat="heavy">
+        <div class="featured-badge">Industrial Grade</div>
+        <div class="card-visual bg-grey-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Pallet rack -->
+            <rect x="18" y="10" width="14" height="165" rx="3" fill="#1A3C6E"/>
+            <rect x="268" y="10" width="14" height="165" rx="3" fill="#1A3C6E"/>
+            <!-- Cross bracing -->
+            <line x1="32" y1="15" x2="268" y2="100" stroke="#1A3C6E" stroke-width="3" opacity=".3"/>
+            <line x1="32" y1="100" x2="268" y2="15" stroke="#1A3C6E" stroke-width="3" opacity=".3"/>
+            <!-- Beams (stepped) -->
+            <rect x="18" y="22" width="264" height="12" rx="3" fill="#2457A4"/>
+            <rect x="18" y="85" width="264" height="12" rx="3" fill="#2457A4"/>
+            <rect x="18" y="148" width="264" height="12" rx="3" fill="#2457A4"/>
+            <rect x="18" y="166" width="264" height="9" rx="3" fill="#1A3C6E"/>
+            <!-- Pallets / loads on shelf 1 -->
+            <rect x="32" y="38" width="90" height="42" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="36" y="34" width="82" height="6" rx="2" fill="#C45A0E" opacity=".5"/>
+            <rect x="140" y="38" width="90" height="42" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="144" y="34" width="82" height="6" rx="2" fill="#1A3C6E" opacity=".5"/>
+            <!-- Pallets on shelf 2 -->
+            <rect x="32" y="100" width="90" height="42" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="36" y="96" width="82" height="6" rx="2" fill="#1A3C6E" opacity=".5"/>
+            <rect x="140" y="100" width="90" height="42" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="144" y="96" width="82" height="6" rx="2" fill="#C45A0E" opacity=".45"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Selective Pallet Racking</h3>
+          <p class="desc">The most common industrial racking system. Forklift accessible from both sides with direct access to every pallet. Scalable to any warehouse size.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Bay Width</div><div class="spec-val">2700 / 3600mm</div></div>
+            <div class="spec"><div class="spec-lbl">Depth</div><div class="spec-val">800 – 1100mm</div></div>
+            <div class="spec"><div class="spec-lbl">Height</div><div class="spec-val">Up to 12,000mm</div></div>
+            <div class="spec"><div class="spec-lbl">Load / Level</div><div class="spec-val">Up to 3,000 kg</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-grey">Forklift</span>
+            <span class="tag tag-blue">Selective</span>
+            <span class="tag tag-orange">Site Visit</span>
+            <span class="tag tag-grey">Tender Ready</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">Site Visit Required</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+      <!-- Heavy 2 -->
+      <div class="product-card" data-cat="heavy">
+        <div class="card-visual bg-navy-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Double-deep rack -->
+            <rect x="15" y="10" width="12" height="165" rx="3" fill="#1A3C6E"/>
+            <rect x="270" y="10" width="12" height="165" rx="3" fill="#1A3C6E"/>
+            <rect x="143" y="10" width="12" height="165" rx="3" fill="#1A3C6E" opacity=".5"/>
+            <rect x="15" y="22" width="267" height="10" rx="3" fill="#2457A4"/>
+            <rect x="15" y="90" width="267" height="10" rx="3" fill="#2457A4"/>
+            <rect x="15" y="158" width="267" height="10" rx="3" fill="#2457A4"/>
+            <!-- Double deep pallets -->
+            <rect x="26" y="36" width="52" height="48" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="82" y="36" width="52" height="48" rx="3" fill="#E8711A" opacity=".4"/>
+            <rect x="158" y="36" width="52" height="48" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="214" y="36" width="52" height="48" rx="3" fill="#2457A4" opacity=".4"/>
+            <rect x="26" y="104" width="52" height="48" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="82" y="104" width="52" height="48" rx="3" fill="#2457A4" opacity=".4"/>
+            <rect x="158" y="104" width="52" height="48" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="214" y="104" width="52" height="48" rx="3" fill="#E8711A" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Double-Deep Pallet Racking</h3>
+          <p class="desc">Store two pallets deep per bay for maximum storage density. Requires reach-truck forklift. Great for high-volume uniform SKU storage.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Depth</div><div class="spec-val">2 Pallet Deep</div></div>
+            <div class="spec"><div class="spec-lbl">Aisle Width</div><div class="spec-val">Reduced</div></div>
+            <div class="spec"><div class="spec-lbl">Height</div><div class="spec-val">Up to 10,000mm</div></div>
+            <div class="spec"><div class="spec-lbl">Load / Level</div><div class="spec-val">Up to 2,500 kg</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-grey">Reach Truck</span>
+            <span class="tag tag-blue">High Density</span>
+            <span class="tag tag-orange">Site Visit</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">Site Visit Required</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+      <!-- Heavy 3 -->
+      <div class="product-card" data-cat="heavy">
+        <div class="card-visual bg-grey-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Cantilever rack -->
+            <rect x="133" y="10" width="14" height="160" rx="3" fill="#1A3C6E"/>
+            <!-- Arms left -->
+            <rect x="65" y="30" width="68" height="10" rx="3" fill="#2457A4" transform="rotate(8 133 35)"/>
+            <rect x="65" y="75" width="68" height="10" rx="3" fill="#2457A4" transform="rotate(8 133 80)"/>
+            <rect x="65" y="120" width="68" height="10" rx="3" fill="#2457A4" transform="rotate(8 133 125)"/>
+            <!-- Arms right -->
+            <rect x="147" y="30" width="68" height="10" rx="3" fill="#2457A4" transform="rotate(-8 147 35)"/>
+            <rect x="147" y="75" width="68" height="10" rx="3" fill="#2457A4" transform="rotate(-8 147 80)"/>
+            <rect x="147" y="120" width="68" height="10" rx="3" fill="#2457A4" transform="rotate(-8 147 125)"/>
+            <!-- Long items on arms -->
+            <rect x="32" y="26" width="90" height="18" rx="3" fill="#E8711A" opacity=".65"/>
+            <rect x="32" y="70" width="90" height="18" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="32" y="114" width="90" height="18" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="168" y="26" width="90" height="18" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="168" y="70" width="90" height="18" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="168" y="114" width="90" height="18" rx="3" fill="#2457A4" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Cantilever Racking</h3>
+          <p class="desc">Specifically designed for long, oversized, and irregularly-shaped items such as pipes, steel bars, timber, and furniture. No front uprights to obstruct loading.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Arm Length</div><div class="spec-val">500 – 2000mm</div></div>
+            <div class="spec"><div class="spec-lbl">Column Height</div><div class="spec-val">Up to 6000mm</div></div>
+            <div class="spec"><div class="spec-lbl">Load / Arm</div><div class="spec-val">Up to 1,500 kg</div></div>
+            <div class="spec"><div class="spec-lbl">Config</div><div class="spec-val">Single / Double</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-grey">Long Items</span>
+            <span class="tag tag-blue">Open Arms</span>
+            <span class="tag tag-orange">Site Visit</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">Site Visit Required</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+
+    </div><!-- /heavy grid -->
+
+    <!-- ─── ACCESSORIES ─── -->
+    <div class="cat-header" data-cat="accessories">
+      <div class="cat-line"></div>
+      <div class="cat-title">🔧 Accessories & Add-Ons <span class="cat-badge">1 Product</span></div>
+      <div class="cat-line"></div>
+    </div>
+    <div class="product-grid">
+      <div class="product-card" data-cat="accessories">
+        <div class="card-visual bg-blue-soft">
+          <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <rect x="40" y="60" width="220" height="8" rx="3" fill="#2457A4"/>
+            <rect x="40" y="110" width="220" height="8" rx="3" fill="#2457A4"/>
+            <rect x="40" y="60" width="8" height="58" rx="3" fill="#1A3C6E"/>
+            <rect x="252" y="60" width="8" height="58" rx="3" fill="#1A3C6E"/>
+            <rect x="55" y="72" width="20" height="35" rx="3" fill="#E8711A" opacity=".7"/>
+            <rect x="80" y="70" width="14" height="37" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="98" y="72" width="20" height="35" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="123" y="70" width="14" height="37" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="141" y="72" width="22" height="35" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="168" y="70" width="16" height="37" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="188" y="72" width="20" height="35" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="212" y="70" width="14" height="37" rx="3" fill="#2457A4" opacity=".5"/>
+            <!-- Price tags -->
+            <rect x="55" y="45" width="60" height="14" rx="7" fill="#E8711A" opacity=".3"/>
+            <rect x="141" y="45" width="70" height="14" rx="7" fill="#2457A4" opacity=".25"/>
+            <!-- Label strip -->
+            <rect x="40" y="120" width="220" height="16" rx="3" fill="#1A3C6E" opacity=".15"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Rack Accessories Pack</h3>
+          <p class="desc">Enhance your racking setup with our range of add-ons: wire mesh decks, dividers, label holders, price rails, hook panels, column protectors, and anti-collapse mesh.</p>
+          <div class="specs">
+            <div class="spec"><div class="spec-lbl">Type</div><div class="spec-val">Various</div></div>
+            <div class="spec"><div class="spec-lbl">Compatibility</div><div class="spec-val">All Systems</div></div>
+            <div class="spec"><div class="spec-lbl">Lead Time</div><div class="spec-val">3 – 7 days</div></div>
+            <div class="spec"><div class="spec-lbl">Order</div><div class="spec-val">Min 1 unit</div></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-grey">Wire Mesh</span>
+            <span class="tag tag-blue">Dividers</span>
+            <span class="tag tag-orange">Price Rail</span>
+            <span class="tag tag-grey">Column Guard</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="price">From <strong>RM 15</strong> / piece</span>
+          <a href="index.html#contact" class="btn-primary">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══════════ COMPARISON TABLE ══════════ -->
+<section class="compare">
+  <div class="container">
+    <div class="compare-header">
+      <div class="section-label">Compare</div>
+      <h2 class="section-title">Which Rack Is Right for You?</h2>
+      <p class="section-sub">A quick guide to help you choose the best solution for your space and budget.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Boltless Rack</th>
+            <th>Gondola</th>
+            <th>Heavy Duty</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tool-free assembly</td>
+            <td><span class="check">✔</span></td>
+            <td><span class="check">✔</span></td>
+            <td><span class="cross">—</span></td>
+          </tr>
+          <tr>
+            <td>Suitable for retail display</td>
+            <td><span class="partial">Partial</span></td>
+            <td><span class="check">✔</span></td>
+            <td><span class="cross">—</span></td>
+          </tr>
+          <tr>
+            <td>Forklift / pallet access</td>
+            <td><span class="cross">—</span></td>
+            <td><span class="cross">—</span></td>
+            <td><span class="check">✔</span></td>
+          </tr>
+          <tr>
+            <td>Adjustable shelf height</td>
+            <td><span class="check">✔</span></td>
+            <td><span class="check">✔</span></td>
+            <td><span class="check">✔</span></td>
+          </tr>
+          <tr>
+            <td>Custom sizing available</td>
+            <td><span class="check">✔</span></td>
+            <td><span class="check">✔</span></td>
+            <td><span class="check">✔</span></td>
+          </tr>
+          <tr>
+            <td>Load per shelf</td>
+            <td>100 – 300 kg</td>
+            <td>60 – 80 kg</td>
+            <td>500 – 3,000 kg</td>
+          </tr>
+          <tr>
+            <td>Best for</td>
+            <td>Warehouse / Storeroom</td>
+            <td>Retail / Supermarket</td>
+            <td>Industrial / Logistics</td>
+          </tr>
+          <tr>
+            <td>Site visit required</td>
+            <td><span class="cross">—</span></td>
+            <td><span class="cross">—</span></td>
+            <td><span class="check">✔</span></td>
+          </tr>
+          <tr>
+            <td>Price range</td>
+            <td>RM 130 – RM 350</td>
+            <td>RM 320 – RM 480+</td>
+            <td>Quotation-based</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section class="custom-cta">
+  <div class="container">
+    <h2>Can't Find What You're Looking For?</h2>
+    <p>We fabricate custom rack sizes and configurations. Tell us your exact requirements — dimensions, load capacity, finish, and quantity — and we'll get back to you with a tailored quote.</p>
+    <div class="cta-actions">
+      <a href="index.html#contact" class="btn-white">Request Custom Quote</a>
+      <a href="index.html#heavy-duty" class="btn-outline-white">Heavy Duty Projects</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 Top Space Ventures. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="index.html#how-it-works">How It Works</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  const toggle = document.getElementById('navToggle');
+  const navbar = document.getElementById('navbar');
+  toggle.addEventListener('click', () => navbar.classList.toggle('open'));
+  document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => navbar.classList.remove('open')));
+
+  // Filter logic
+  const counts = { all: 13, boltless: 5, gondola: 4, heavy: 3, accessories: 1 };
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('.product-card[data-cat]');
+      const catHeaders = document.querySelectorAll('.cat-header[data-cat]');
+      cards.forEach(card => {
+        card.closest('.product-grid').style.display = '';
+        card.style.display = (f === 'all' || card.dataset.cat === f) ? '' : 'none';
+      });
+      catHeaders.forEach(h => {
+        h.style.display = (f === 'all' || h.dataset.cat === f) ? '' : 'none';
+        // Also hide the grid if all its cards are hidden
+        const grid = h.nextElementSibling;
+        if (grid) {
+          const visibleCards = [...grid.querySelectorAll('.product-card')].filter(c => c.style.display !== 'none');
+          grid.style.display = visibleCards.length ? '' : 'none';
+        }
+      });
+
+      document.getElementById('filterCount').textContent =
+        `Showing ${counts[f]} product${counts[f] !== 1 ? 's' : ''}`;
+    });
+  });
+
+  // Scroll nav shadow
+  window.addEventListener('scroll', () => {
+    navbar.style.boxShadow = window.scrollY > 10 ? '0 4px 24px rgba(0,0,0,.35)' : '0 2px 12px rgba(0,0,0,.25)';
+  });
+</script>
+</body>
+</html>
