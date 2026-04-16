@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Gallery – Top Space Ventures</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:        #1A3C6E;
+      --blue-mid:    #2457A4;
+      --blue-light:  #EAF0FB;
+      --orange:      #E8711A;
+      --orange-dark: #C45A0E;
+      --orange-light:#FFF3E8;
+      --white:       #FFFFFF;
+      --grey-100:    #F5F7FA;
+      --grey-300:    #D1D9E6;
+      --grey-600:    #5A6478;
+      --text:        #1B2435;
+      --radius:      8px;
+      --shadow:      0 4px 24px rgba(26,60,110,.12);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section-label {
+      display: inline-block; background: var(--orange-light); color: var(--orange);
+      font-weight: 700; font-size: .78rem; letter-spacing: .08em;
+      text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 10px;
+    }
+    .section-title { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800; color: var(--blue); }
+    .btn-primary {
+      display: inline-block; background: var(--orange); color: var(--white);
+      padding: 12px 28px; border-radius: var(--radius); font-weight: 700; font-size: .95rem;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--orange-dark); transform: translateY(-1px); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--blue); box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .nav-logo .logo-mark {
+      width: 42px; height: 42px; background: var(--orange); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo .logo-mark svg { width: 24px; height: 24px; fill: var(--white); }
+    .nav-logo .logo-text { color: var(--white); font-weight: 800; font-size: 1.15rem; line-height: 1.1; }
+    .nav-logo .logo-text span { display: block; font-weight: 400; font-size: .72rem; letter-spacing: .06em; opacity: .8; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,.75); font-size: .93rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--orange); }
+    .nav-cta { background: var(--orange); color: var(--white); padding: 9px 22px; border-radius: var(--radius); font-weight: 700; font-size: .9rem; transition: background .2s; }
+    .nav-cta:hover { background: var(--orange-dark); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-toggle span { display: block; width: 26px; height: 2px; background: var(--white); border-radius: 2px; }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: linear-gradient(135deg, var(--blue) 55%, var(--blue-mid) 100%);
+      padding: 64px 0 56px; text-align: center;
+    }
+    .breadcrumb { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; font-size: .85rem; color: rgba(255,255,255,.55); }
+    .breadcrumb a { color: rgba(255,255,255,.7); transition: color .2s; }
+    .breadcrumb a:hover { color: var(--orange); }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--white); margin-bottom: 12px; }
+    .page-hero h1 em { color: var(--orange); font-style: normal; }
+    .page-hero p { color: rgba(255,255,255,.8); font-size: 1.05rem; max-width: 560px; margin: 0 auto 28px; }
+    .hero-stats { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+    .hero-stat .num { font-size: 1.8rem; font-weight: 900; color: var(--orange); }
+    .hero-stat .lbl { font-size: .78rem; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .05em; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar { background: var(--white); border-bottom: 1px solid var(--grey-300); position: sticky; top: 68px; z-index: 90; }
+    .filter-inner { display: flex; align-items: center; gap: 10px; padding: 14px 0; flex-wrap: wrap; }
+    .filter-label { font-size: .82rem; font-weight: 700; color: var(--grey-600); text-transform: uppercase; letter-spacing: .05em; margin-right: 4px; }
+    .filter-btn {
+      padding: 7px 18px; border-radius: 20px; font-size: .85rem; font-weight: 600;
+      border: 1.5px solid var(--grey-300); background: var(--white); color: var(--grey-600);
+      cursor: pointer; transition: all .2s;
+    }
+    .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .filter-btn.active { background: var(--blue); color: var(--white); border-color: var(--blue); }
+    .filter-count { margin-left: auto; font-size: .82rem; color: var(--grey-600); font-style: italic; }
+
+    /* ── GALLERY ── */
+    .gallery-section { padding: 56px 0 96px; background: var(--grey-100); }
+
+    .gallery-grid {
+      columns: 3; column-gap: 20px;
+    }
+    .gallery-item {
+      break-inside: avoid; margin-bottom: 20px;
+      border-radius: 12px; overflow: hidden;
+      position: relative; cursor: pointer;
+      box-shadow: 0 2px 12px rgba(26,60,110,.1);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .gallery-item:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .gallery-item:hover .overlay { opacity: 1; }
+    .gallery-item:hover .placeholder-img { filter: brightness(.85); }
+
+    /* Placeholder image */
+    .placeholder-img {
+      width: 100%; display: block;
+      transition: filter .25s;
+    }
+    .placeholder-img svg { width: 100%; display: block; }
+
+    /* Overlay */
+    .overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,60,110,.85) 0%, rgba(26,60,110,.2) 60%, transparent 100%);
+      opacity: 0; transition: opacity .25s;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
+    }
+    .overlay h4 { color: var(--white); font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .overlay p  { color: rgba(255,255,255,.8); font-size: .82rem; }
+    .overlay-tag {
+      display: inline-block; background: var(--orange); color: var(--white);
+      font-size: .7rem; font-weight: 700; padding: 3px 10px; border-radius: 10px;
+      margin-bottom: 8px; align-self: flex-start;
+    }
+    .zoom-icon {
+      position: absolute; top: 14px; right: 14px;
+      width: 36px; height: 36px; background: rgba(255,255,255,.9); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; opacity: 0; transition: opacity .25s;
+    }
+    .gallery-item:hover .zoom-icon { opacity: 1; }
+
+    /* Upload placeholder card */
+    .upload-card {
+      break-inside: avoid; margin-bottom: 20px;
+      border-radius: 12px; border: 2px dashed var(--grey-300);
+      background: var(--white); display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 20px; text-align: center; min-height: 200px;
+    }
+    .upload-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .upload-card h4 { color: var(--blue); font-size: .95rem; font-weight: 700; margin-bottom: 6px; }
+    .upload-card p  { color: var(--grey-600); font-size: .82rem; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(10,20,40,.92); align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      position: relative; max-width: 860px; width: 90%;
+      background: var(--white); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,.5);
+    }
+    .lightbox-img { width: 100%; display: block; }
+    .lightbox-img svg { width: 100%; display: block; }
+    .lightbox-body { padding: 20px 24px 24px; }
+    .lightbox-body .lb-tag {
+      display: inline-block; background: var(--orange-light); color: var(--orange);
+      font-size: .75rem; font-weight: 700; padding: 3px 12px; border-radius: 10px; margin-bottom: 10px;
+    }
+    .lightbox-body h3 { font-size: 1.2rem; font-weight: 800; color: var(--blue); margin-bottom: 6px; }
+    .lightbox-body p  { color: var(--grey-600); font-size: .93rem; }
+    .lightbox-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 36px; height: 36px; background: rgba(0,0,0,.5); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-size: 1.2rem; cursor: pointer; border: none;
+      transition: background .2s;
+    }
+    .lightbox-close:hover { background: var(--orange); }
+    .lightbox-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 40px; height: 40px; background: rgba(255,255,255,.9); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; cursor: pointer; border: none; color: var(--blue);
+      transition: background .2s; box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    .lightbox-nav:hover { background: var(--orange); color: var(--white); }
+    .lb-prev { left: -20px; }
+    .lb-next { right: -20px; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--blue) 0%, #0F2547 100%);
+      padding: 72px 0; text-align: center;
+    }
+    .cta-section h2 { color: var(--white); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 900; margin-bottom: 14px; }
+    .cta-section p  { color: rgba(255,255,255,.78); max-width: 520px; margin: 0 auto 28px; }
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-white { display: inline-block; background: var(--white); color: var(--blue); padding: 13px 30px; border-radius: var(--radius); font-weight: 800; font-size: .95rem; transition: background .2s; }
+    .btn-white:hover { background: var(--blue-light); }
+    .btn-outline-white { display: inline-block; border: 2px solid var(--white); color: var(--white); padding: 11px 26px; border-radius: var(--radius); font-weight: 700; font-size: .95rem; transition: background .2s; }
+    .btn-outline-white:hover { background: rgba(255,255,255,.1); }
+
+    /* ── FOOTER ── */
+    footer { background: #0F2547; color: rgba(255,255,255,.7); padding: 32px 0 24px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: .82rem; }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,.55); transition: color .2s; }
+    .footer-links a:hover { color: var(--orange); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .gallery-grid { columns: 2; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+    }
+    @media (max-width: 560px) {
+      .gallery-grid { columns: 1; }
+      .hero-stats { gap: 20px; }
+      nav.open .nav-links { display: flex; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--blue); padding: 16px 24px; gap: 16px; border-top: 1px solid rgba(255,255,255,.1); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M3 3h18v3H3V3zm0 5h18v2H3V8zm0 4h18v2H3v-2zm0 4h12v2H3v-2zm14 1l4-4v8l-4-4z"/></svg>
+      </div>
+      <div class="logo-text">Top Space Ventures<span>Storage Racking Solutions</span></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="index.html#how-it-works">How It Works</a></li>
+      <li><a href="index.html#why-us">Why Us</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="nav-cta">Get a Quote</a>
+    <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- ══════════ PAGE HERO ══════════ -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a><span>›</span><span>Gallery</span>
+    </div>
+    <h1>Our <em>Project</em> Gallery</h1>
+    <p>See how we've transformed warehouses, retail stores, and commercial spaces across Malaysia with our racking solutions.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">500+</div><div class="lbl">Projects Done</div></div>
+      <div class="hero-stat"><div class="num">10+</div><div class="lbl">Years Experience</div></div>
+      <div class="hero-stat"><div class="num">3</div><div class="lbl">Product Types</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FILTER BAR ══════════ -->
+<div class="filter-bar">
+  <div class="container filter-inner">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="boltless">Boltless Rack</button>
+    <button class="filter-btn" data-filter="gondola">Gondola</button>
+    <button class="filter-btn" data-filter="heavy">Heavy Duty</button>
+    <button class="filter-btn" data-filter="project">Installed Projects</button>
+    <span class="filter-count" id="filterCount">Showing all 16 items</span>
+  </div>
+</div>
+
+<!-- ══════════ GALLERY ══════════ -->
+<section class="gallery-section">
+  <div class="container">
+    <div class="gallery-grid" id="galleryGrid">
+
+      <!-- BOLTLESS items -->
+      <div class="gallery-item" data-cat="boltless" data-title="4-Tier Boltless Rack" data-desc="Standard 4-tier boltless shelving installed in a warehouse storeroom. Width: 1200mm, Load: 200kg per shelf." data-tag="Boltless Rack" onclick="openLightbox(0)">
+        <div class="placeholder-img">
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="300" fill="#EAF0FB"/>
+            <rect x="40" y="20" width="12" height="260" rx="3" fill="#2457A4"/>
+            <rect x="348" y="20" width="12" height="260" rx="3" fill="#2457A4"/>
+            <rect x="40" y="28" width="320" height="12" rx="3" fill="#1A3C6E"/>
+            <rect x="40" y="93" width="320" height="12" rx="3" fill="#1A3C6E"/>
+            <rect x="40" y="158" width="320" height="12" rx="3" fill="#1A3C6E"/>
+            <rect x="40" y="223" width="320" height="12" rx="3" fill="#1A3C6E"/>
+            <rect x="40" y="268" width="320" height="12" rx="3" fill="#1A3C6E"/>
+            <rect x="55" y="44" width="65" height="44" rx="4" fill="#E8711A" opacity=".7"/>
+            <rect x="128" y="40" width="55" height="48" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="191" y="44" width="70" height="44" rx="4" fill="#E8711A" opacity=".55"/>
+            <rect x="269" y="42" width="60" height="46" rx="4" fill="#2457A4" opacity=".65"/>
+            <rect x="55" y="108" width="70" height="44" rx="4" fill="#2457A4" opacity=".55"/>
+            <rect x="133" y="105" width="58" height="47" rx="4" fill="#E8711A" opacity=".6"/>
+            <rect x="199" y="108" width="65" height="44" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="272" y="106" width="55" height="46" rx="4" fill="#E8711A" opacity=".5"/>
+            <rect x="55" y="173" width="62" height="44" rx="4" fill="#E8711A" opacity=".6"/>
+            <rect x="125" y="170" width="70" height="47" rx="4" fill="#2457A4" opacity=".55"/>
+            <rect x="203" y="173" width="58" height="44" rx="4" fill="#E8711A" opacity=".5"/>
+            <rect x="269" y="171" width="65" height="46" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="55" y="238" width="65" height="25" rx="4" fill="#2457A4" opacity=".5"/>
+            <rect x="128" y="235" width="58" height="28" rx="4" fill="#E8711A" opacity=".55"/>
+            <rect x="194" y="238" width="70" height="25" rx="4" fill="#2457A4" opacity=".5"/>
+            <text x="200" y="292" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="#5A6478">Standard 4-Tier Boltless Rack</text>
+          </svg>
+        </div>
+        <div class="overlay">
+          <span class="overlay-tag">Boltless Rack</span>
+          <h4>4-Tier Boltless Rack</h4>
+          <p>Warehouse storeroom installation</p>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+
+      <div class="gallery-item" data-cat="boltless" data-title="6-Tier Tall Rack Setup" data-desc="6-tier tall boltless rack maximising vertical ceiling space in a high-bay storage facility." data-tag="Boltless Rack" onclick="openLightbox(1)">
+        <div class="placeholder-img">
+          <svg viewBox="0 0 400 380" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="380" fill="#d4e2f8"/>
+            <rect x="35" y="15" width="12" height="345" rx="3" fill="#1A3C6E"/>
+            <rect x="353" y="15" width="12" height="345" rx="3" fill="#1A3C6E"/>
+            <rect x="35" y="22" width="330" height="10" rx="3" fill="#2457A4"/>
+            <rect x="35" y="78" width="330" height="10" rx="3" fill="#2457A4"/>
+            <rect x="35" y="134" width="330" height="10" rx="3" fill="#2457A4"/>
+            <rect x="35" y="190" width="330" height="10" rx="3" fill="#2457A4"/>
+            <rect x="35" y="246" width="330" height="10" rx="3" fill="#2457A4"/>
+            <rect x="35" y="302" width="330" height="10" rx="3" fill="#2457A4"/>
+            <rect x="35" y="350" width="330" height="10" rx="3" fill="#2457A4"/>
+            <rect x="50" y="35" width="70" height="38" rx="4" fill="#E8711A" opacity=".65"/>
+            <rect x="128" y="33" width="60" height="40" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="196" y="35" width="75" height="38" rx="4" fill="#E8711A" opacity=".55"/>
+            <rect x="279" y="33" width="65" height="40" rx="4" fill="#2457A4" opacity=".65"/>
+            <rect x="50" y="92" width="65" height="37" rx="4" fill="#2457A4" opacity=".55"/>
+            <rect x="123" y="90" width="72" height="39" rx="4" fill="#E8711A" opacity=".6"/>
+            <rect x="203" y="92" width="60" height="37" rx="4" fill="#2457A4" opacity=".55"/>
+            <rect x="271" y="90" width="70" height="39" rx="4" fill="#E8711A" opacity=".5"/>
+            <rect x="50" y="148" width="72" height="37" rx="4" fill="#E8711A" opacity=".6"/>
+            <rect x="130" y="146" width="60" height="39" rx="4" fill="#2457A4" opacity=".55"/>
+            <rect x="198" y="148" width="68" height="37" rx="4" fill="#E8711A" opacity=".5"/>
+            <rect x="274" y="146" width="62" height="39" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="50" y="204" width="60" height="37" rx="4" fill="#2457A4" opacity=".55"/>
+            <rect x="118" y="202" width="75" height="39" rx="4" fill="#E8711A" opacity=".55"/>
+            <rect x="201" y="204" width="65" height="37" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="274" y="202" width="62" height="39" rx="4" fill="#E8711A" opacity=".5"/>
+            <rect x="50" y="260" width="68" height="37" rx="4" fill="#E8711A" opacity=".6"/>
+            <rect x="126" y="258" width="62" height="39" rx="4" fill="#2457A4" opacity=".55"/>
+            <rect x="196" y="260" width="72" height="37" rx="4" fill="#E8711A" opacity=".5"/>
+            <rect x="276" y="258" width="60" height="39" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="50" y="316" width="60" height="28" rx="4" fill="#2457A4" opacity=".5"/>
+            <rect x="118" y="314" width="68" height="30" rx="4" fill="#E8711A" opacity=".5"/>
+            <rect x="194" y="316" width="72" height="28" rx="4" fill="#2457A4" opacity=".5"/>
+            <text x="200" y="372" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="#5A6478">6-Tier Tall Boltless Rack</text>
+          </svg>
+        </div>
+        <div class="overlay">
+          <span class="overlay-tag">Boltless Rack</span>
+          <h4>6-Tier Tall Rack</h4>
+          <p>High-bay storage facility</p>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+
+      <div class="gallery-item" data-cat="boltless" data-title="Office Storeroom Setup" data-desc="Compact boltless rack solution for an office storeroom. Organised shelving for files, supplies, and equipment." data-tag="Boltless Rack" onclick="openLightbox(2)">
+        <div class="placeholder-img">
+          <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="260" fill="#E8EDF5"/>
+            <!-- Two racks side by side -->
+            <rect x="20" y="20" width="10" height="220" rx="3" fill="#1A3C6E"/>
+            <rect x="185" y="20" width="10" height="220" rx="3" fill="#1A3C6E"/>
+            <rect x="20" y="28" width="175" height="8" rx="2" fill="#2457A4"/>
+            <rect x="20" y="80" width="175" height="8" rx="2" fill="#2457A4"/>
+            <rect x="20" y="132" width="175" height="8" rx="2" fill="#2457A4"/>
+            <rect x="20" y="184" width="175" height="8" rx="2" fill="#2457A4"/>
+            <rect x="20" y="232" width="175" height="8" rx="2" fill="#2457A4"/>
+            <rect x="32" y="38" width="40" height="38" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="78" y="36" width="35" height="40" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="119" y="38" width="40" height="38" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="32" y="92" width="38" height="35" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="76" y="90" width="42" height="37" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="124" y="92" width="36" height="35" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="32" y="144" width="42" height="35" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="80" y="142" width="36" height="37" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="122" y="144" width="40" height="35" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="32" y="196" width="36" height="30" rx="3" fill="#2457A4" opacity=".5"/>
+            <rect x="74" y="194" width="42" height="32" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="122" y="196" width="38" height="30" rx="3" fill="#2457A4" opacity=".5"/>
+            <!-- second rack -->
+            <rect x="210" y="20" width="10" height="220" rx="3" fill="#1A3C6E"/>
+            <rect x="370" y="20" width="10" height="220" rx="3" fill="#1A3C6E"/>
+            <rect x="210" y="28" width="170" height="8" rx="2" fill="#2457A4"/>
+            <rect x="210" y="80" width="170" height="8" rx="2" fill="#2457A4"/>
+            <rect x="210" y="132" width="170" height="8" rx="2" fill="#2457A4"/>
+            <rect x="210" y="184" width="170" height="8" rx="2" fill="#2457A4"/>
+            <rect x="210" y="232" width="170" height="8" rx="2" fill="#2457A4"/>
+            <rect x="222" y="38" width="38" height="38" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="266" y="36" width="42" height="40" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="314" y="38" width="36" height="38" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="222" y="92" width="42" height="35" rx="3" fill="#E8711A" opacity=".55"/>
+            <rect x="270" y="90" width="36" height="37" rx="3" fill="#2457A4" opacity=".6"/>
+            <rect x="312" y="92" width="40" height="35" rx="3" fill="#E8711A" opacity=".5"/>
+            <rect x="222" y="144" width="36" height="35" rx="3" fill="#2457A4" opacity=".55"/>
+            <rect x="264" y="142" width="44" height="37" rx="3" fill="#E8711A" opacity=".6"/>
+            <rect x="314" y="144" width="38" height="35" rx="3" fill="#2457A4" opacity=".5"/>
+            <text x="200" y="252" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="#5A6478">Office Storeroom Installation</text>
+          </svg>
+        </div>
+        <div class="overlay">
+          <span class="overlay-tag">Boltless Rack</span>
+          <h4>Office Storeroom</h4>
+          <p>Compact dual-rack setup</p>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+
+      <!-- GONDOLA items -->
+      <div class="gallery-item" data-cat="gondola" data-title="Supermarket Gondola Aisle" data-desc="Full gondola aisle installation for a supermarket. Double-sided shelving creating two product-facing aisles." data-tag="Gondola" onclick="openLightbox(3)">
+        <div class="placeholder-img">
+          <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="320" fill="#FFF3E8"/>
+            <!-- Aisle of double gondolas -->
+            <rect x="180" y="10" width="16" height="290" rx="3" fill="#1A3C6E"/>
+            <rect x="20" y="10" width="10" height="290" rx="3" fill="#C45A0E"/>
+            <rect x="370" y="10" width="10" height="290" rx="3" fill="#C45A0E"/>
+            <rect x="20" y="18" width="160" height="7" rx="2" fill="#E8711A"/>
+            <rect x="20" y="70" width="160" height="7" rx="2" fill="#E8711A"/>
+            <rect x="20" y="122" width="160" height="7" rx="2" fill="#E8711A"/>
+            <rect x="20" y="174" width="160" height="7" rx="2" fill="#E8711A"/>
+            <rect x="20" y="226" width="160" height="7" rx="2" fill="#E8711A"/>
+            <rect x="20" y="278" width="160" height="7" rx="2" fill="#E8711A"/>
+            <rect x="196" y="18" width="184" height="7" rx="2" fill="#E8711A"/>
+            <rect x="196" y="70" width="184" height="7" rx="2" fill="#E8711A"/>
+            <rect x="196" y="122" width="184" height="7" rx="2" fill="#E8711A"/>
+            <rect x="196" y="174" width="184" height="7" rx="2" fill="#E8711A"/>
+            <rect x="196" y="226" width="184" height="7" rx="2" fill="#E8711A"/>
+            <rect x="196" y="278" width="184" height="7" rx="2" fill="#E8711A"/>
+            <!-- Left products -->
+            <rect x="30" y="27" width="22" height="40" rx="2" fill="#2457A4" opacity=".65"/>
+            <rect x="56" y="25" width="20" height="42" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="80" y="27" width="22" height="40" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="106" y="25" width="20" height="42" rx="2" fill="#E8711A" opacity=".65"/>
+            <rect x="130" y="27" width="22" height="40" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="30" y="79" width="20" height="40" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="54" y="77" width="24" height="42" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="82" y="79" width="20" height="40" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="106" y="77" width="22" height="42" rx="2" fill="#2457A4" opacity=".65"/>
+            <rect x="132" y="79" width="20" height="40" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="30" y="131" width="22" height="40" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="56" y="129" width="20" height="42" rx="2" fill="#E8711A" opacity=".65"/>
+            <rect x="80" y="131" width="24" height="40" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="108" y="129" width="20" height="42" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="132" y="131" width="22" height="40" rx="2" fill="#2457A4" opacity=".6"/>
+            <!-- Right products -->
+            <rect x="204" y="27" width="22" height="40" rx="2" fill="#E8711A" opacity=".65"/>
+            <rect x="230" y="25" width="20" height="42" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="254" y="27" width="24" height="40" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="282" y="25" width="20" height="42" rx="2" fill="#2457A4" opacity=".65"/>
+            <rect x="306" y="27" width="22" height="40" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="332" y="25" width="20" height="42" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="204" y="79" width="20" height="40" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="228" y="77" width="24" height="42" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="256" y="79" width="20" height="40" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="280" y="77" width="22" height="42" rx="2" fill="#E8711A" opacity=".65"/>
+            <rect x="306" y="79" width="20" height="40" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="330" y="77" width="22" height="42" rx="2" fill="#E8711A" opacity=".5"/>
+            <text x="200" y="310" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="#5A6478">Supermarket Gondola Aisle</text>
+          </svg>
+        </div>
+        <div class="overlay">
+          <span class="overlay-tag">Gondola</span>
+          <h4>Supermarket Gondola Aisle</h4>
+          <p>Double-sided full aisle setup</p>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+
+      <div class="gallery-item" data-cat="gondola" data-title="Pharmacy Wall Shelving" data-desc="Single-sided wall-mounted gondola shelving for a pharmacy. Neat product display with price rail and label holders." data-tag="Gondola" onclick="openLightbox(4)">
+        <div class="placeholder-img">
+          <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="240" fill="#FFF3E8"/>
+            <rect x="10" y="10" width="380" height="12" rx="3" fill="#1A3C6E"/>
+            <rect x="10" y="10" width="12" height="210" rx="3" fill="#C45A0E"/>
+            <rect x="378" y="10" width="12" height="210" rx="3" fill="#C45A0E"/>
+            <rect x="10" y="54" width="380" height="8" rx="2" fill="#E8711A"/>
+            <rect x="10" y="100" width="380" height="8" rx="2" fill="#E8711A"/>
+            <rect x="10" y="146" width="380" height="8" rx="2" fill="#E8711A"/>
+            <rect x="10" y="192" width="380" height="8" rx="2" fill="#E8711A"/>
+            <rect x="10" y="215" width="380" height="8" rx="2" fill="#E8711A"/>
+            <rect x="26" y="23" width="16" height="28" rx="2" fill="#2457A4" opacity=".65"/>
+            <rect x="46" y="21" width="16" height="30" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="66" y="23" width="16" height="28" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="86" y="21" width="16" height="30" rx="2" fill="#E8711A" opacity=".65"/>
+            <rect x="106" y="23" width="16" height="28" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="126" y="21" width="16" height="30" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="146" y="23" width="16" height="28" rx="2" fill="#2457A4" opacity=".65"/>
+            <rect x="166" y="21" width="16" height="30" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="186" y="23" width="16" height="28" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="206" y="21" width="16" height="30" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="226" y="23" width="16" height="28" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="246" y="21" width="16" height="30" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="266" y="23" width="16" height="28" rx="2" fill="#2457A4" opacity=".65"/>
+            <rect x="286" y="21" width="16" height="30" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="306" y="23" width="16" height="28" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="326" y="21" width="16" height="30" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="346" y="23" width="16" height="28" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="26" y="65" width="18" height="30" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="48" y="63" width="16" height="32" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="68" y="65" width="18" height="30" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="90" y="63" width="16" height="32" rx="2" fill="#2457A4" opacity=".65"/>
+            <rect x="110" y="65" width="18" height="30" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="132" y="63" width="16" height="32" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="152" y="65" width="18" height="30" rx="2" fill="#E8711A" opacity=".65"/>
+            <rect x="174" y="63" width="16" height="32" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="194" y="65" width="18" height="30" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="216" y="63" width="16" height="32" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="236" y="65" width="18" height="30" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="258" y="63" width="16" height="32" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="278" y="65" width="18" height="30" rx="2" fill="#E8711A" opacity=".65"/>
+            <rect x="300" y="63" width="16" height="32" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="320" y="65" width="18" height="30" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="342" y="63" width="16" height="32" rx="2" fill="#2457A4" opacity=".6"/>
+            <text x="200" y="232" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="#5A6478">Pharmacy Wall Shelving</text>
+          </svg>
+        </div>
+        <div class="overlay">
+          <span class="overlay-tag">Gondola</span>
+          <h4>Pharmacy Wall Shelving</h4>
+          <p>Single-sided wall-mounted display</p>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+
+      <div class="gallery-item" data-cat="gondola" data-title="Minimarket Full Setup" data-desc="Complete gondola setup for a minimarket including end-caps, wall shelving, and multiple aisle gondolas." data-tag="Gondola" onclick="openLightbox(5)">
+        <div class="placeholder-img">
+          <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="280" fill="#FFF3E8"/>
+            <!-- Floor plan view of minimarket shelves -->
+            <rect x="20" y="20" width="360" height="240" rx="8" fill="none" stroke="#E8711A" stroke-width="2" stroke-dasharray="6,4"/>
+            <!-- Aisle 1 -->
+            <rect x="50" y="40" width="12" height="180" rx="3" fill="#C45A0E"/>
+            <rect x="140" y="40" width="12" height="180" rx="3" fill="#C45A0E"/>
+            <rect x="50" y="40" width="102" height="7" rx="2" fill="#E8711A"/>
+            <rect x="50" y="80" width="102" height="7" rx="2" fill="#E8711A"/>
+            <rect x="50" y="120" width="102" height="7" rx="2" fill="#E8711A"/>
+            <rect x="50" y="160" width="102" height="7" rx="2" fill="#E8711A"/>
+            <rect x="50" y="200" width="102" height="7" rx="2" fill="#E8711A"/>
+            <rect x="60" y="50" width="20" height="27" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="84" y="48" width="20" height="29" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="108" y="50" width="20" height="27" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="60" y="90" width="20" height="27" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="84" y="88" width="20" height="29" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="108" y="90" width="20" height="27" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="60" y="130" width="20" height="27" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="84" y="128" width="20" height="29" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="108" y="130" width="20" height="27" rx="2" fill="#2457A4" opacity=".55"/>
+            <!-- Aisle 2 -->
+            <rect x="240" y="40" width="12" height="180" rx="3" fill="#C45A0E"/>
+            <rect x="340" y="40" width="12" height="180" rx="3" fill="#C45A0E"/>
+            <rect x="240" y="40" width="112" height="7" rx="2" fill="#E8711A"/>
+            <rect x="240" y="80" width="112" height="7" rx="2" fill="#E8711A"/>
+            <rect x="240" y="120" width="112" height="7" rx="2" fill="#E8711A"/>
+            <rect x="240" y="160" width="112" height="7" rx="2" fill="#E8711A"/>
+            <rect x="240" y="200" width="112" height="7" rx="2" fill="#E8711A"/>
+            <rect x="252" y="50" width="22" height="27" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="278" y="48" width="20" height="29" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="302" y="50" width="22" height="27" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="252" y="90" width="20" height="27" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="276" y="88" width="22" height="29" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="302" y="90" width="20" height="27" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="252" y="130" width="22" height="27" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="278" y="128" width="20" height="29" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="302" y="130" width="22" height="27" rx="2" fill="#E8711A" opacity=".6"/>
+            <!-- Label -->
+            <text x="190" y="245" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#C45A0E" font-weight="700">MINIMARKET LAYOUT</text>
+            <text x="200" y="268" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="#5A6478">Complete Minimarket Gondola Setup</text>
+          </svg>
+        </div>
+        <div class="overlay">
+          <span class="overlay-tag">Gondola</span>
+          <h4>Minimarket Full Setup</h4>
+          <p>Complete store gondola installation</p>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+
+      <!-- HEAVY DUTY items -->
+      <div class="gallery-item" data-cat="heavy" data-title="Warehouse Pallet Racking" data-desc="Large-scale selective pallet racking system in a 5,000 sqft warehouse. Forklift accessible, 3 levels high." data-tag="Heavy Duty" onclick="openLightbox(6)">
+        <div class="placeholder-img">
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="300" fill="#dce5f5"/>
+            <rect x="15" y="15" width="14" height="270" rx="3" fill="#1A3C6E"/>
+            <rect x="385" y="15" width="14" height="270" rx="3" fill="#1A3C6E"/>
+            <rect x="200" y="15" width="14" height="270" rx="3" fill="#1A3C6E" opacity=".6"/>
+            <!-- Cross bracing -->
+            <line x1="29" y1="20" x2="200" y2="150" stroke="#1A3C6E" stroke-width="2" opacity=".2"/>
+            <line x1="29" y1="150" x2="200" y2="20" stroke="#1A3C6E" stroke-width="2" opacity=".2"/>
+            <line x1="214" y1="20" x2="385" y2="150" stroke="#1A3C6E" stroke-width="2" opacity=".2"/>
+            <line x1="214" y1="150" x2="385" y2="20" stroke="#1A3C6E" stroke-width="2" opacity=".2"/>
+            <!-- Beams -->
+            <rect x="15" y="28" width="370" height="14" rx="3" fill="#2457A4"/>
+            <rect x="15" y="118" width="370" height="14" rx="3" fill="#2457A4"/>
+            <rect x="15" y="208" width="370" height="14" rx="3" fill="#2457A4"/>
+            <rect x="15" y="272" width="370" height="14" rx="3" fill="#1A3C6E"/>
+            <!-- Pallets row 1 -->
+            <rect x="28" y="48" width="80" height="64" rx="4" fill="#E8711A" opacity=".65"/>
+            <rect x="32" y="44" width="72" height="8" rx="2" fill="#C45A0E" opacity=".6"/>
+            <rect x="118" y="48" width="74" height="64" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="122" y="44" width="66" height="8" rx="2" fill="#1A3C6E" opacity=".55"/>
+            <rect x="218" y="48" width="80" height="64" rx="4" fill="#E8711A" opacity=".6"/>
+            <rect x="222" y="44" width="72" height="8" rx="2" fill="#C45A0E" opacity=".55"/>
+            <rect x="306" y="48" width="74" height="64" rx="4" fill="#2457A4" opacity=".65"/>
+            <rect x="310" y="44" width="66" height="8" rx="2" fill="#1A3C6E" opacity=".6"/>
+            <!-- Pallets row 2 -->
+            <rect x="28" y="138" width="80" height="64" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="32" y="134" width="72" height="8" rx="2" fill="#1A3C6E" opacity=".55"/>
+            <rect x="118" y="138" width="74" height="64" rx="4" fill="#E8711A" opacity=".55"/>
+            <rect x="122" y="134" width="66" height="8" rx="2" fill="#C45A0E" opacity=".5"/>
+            <rect x="218" y="138" width="80" height="64" rx="4" fill="#2457A4" opacity=".65"/>
+            <rect x="222" y="134" width="72" height="8" rx="2" fill="#1A3C6E" opacity=".6"/>
+            <rect x="306" y="138" width="74" height="64" rx="4" fill="#E8711A" opacity=".6"/>
+            <rect x="310" y="134" width="66" height="8" rx="2" fill="#C45A0E" opacity=".55"/>
+            <text x="200" y="292" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="#5A6478">Warehouse Pallet Racking System</text>
+          </svg>
+        </div>
+        <div class="overlay">
+          <span class="overlay-tag">Heavy Duty</span>
+          <h4>Warehouse Pallet Racking</h4>
+          <p>5,000 sqft facility installation</p>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+
+      <div class="gallery-item" data-cat="heavy" data-title="Cantilever Rack – Pipe Storage" data-desc="Cantilever racking system for a steel pipe and bar storage facility. Single-column double-arm configuration." data-tag="Heavy Duty" onclick="openLightbox(7)">
+        <div class="placeholder-img">
+          <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="260" fill="#E8EDF5"/>
+            <rect x="188" y="10" width="18" height="235" rx="4" fill="#1A3C6E"/>
+            <rect x="94" y="38" width="94" height="12" rx="4" fill="#2457A4" transform="rotate(10 188 44)"/>
+            <rect x="94" y="88" width="94" height="12" rx="4" fill="#2457A4" transform="rotate(10 188 94)"/>
+            <rect x="94" y="138" width="94" height="12" rx="4" fill="#2457A4" transform="rotate(10 188 144)"/>
+            <rect x="94" y="188" width="94" height="12" rx="4" fill="#2457A4" transform="rotate(10 188 194)"/>
+            <rect x="206" y="38" width="94" height="12" rx="4" fill="#2457A4" transform="rotate(-10 206 44)"/>
+            <rect x="206" y="88" width="94" height="12" rx="4" fill="#2457A4" transform="rotate(-10 206 94)"/>
+            <rect x="206" y="138" width="94" height="12" rx="4" fill="#2457A4" transform="rotate(-10 206 144)"/>
+            <rect x="206" y="188" width="94" height="12" rx="4" fill="#2457A4" transform="rotate(-10 206 194)"/>
+            <!-- Pipes on arms -->
+            <rect x="28" y="34" width="115" height="14" rx="7" fill="#E8711A" opacity=".7"/>
+            <rect x="28" y="52" width="115" height="14" rx="7" fill="#E8711A" opacity=".55"/>
+            <rect x="28" y="84" width="115" height="14" rx="7" fill="#2457A4" opacity=".65"/>
+            <rect x="28" y="102" width="115" height="14" rx="7" fill="#2457A4" opacity=".5"/>
+            <rect x="28" y="134" width="115" height="14" rx="7" fill="#E8711A" opacity=".6"/>
+            <rect x="28" y="152" width="115" height="14" rx="7" fill="#E8711A" opacity=".5"/>
+            <rect x="250" y="34" width="115" height="14" rx="7" fill="#2457A4" opacity=".65"/>
+            <rect x="250" y="52" width="115" height="14" rx="7" fill="#2457A4" opacity=".5"/>
+            <rect x="250" y="84" width="115" height="14" rx="7" fill="#E8711A" opacity=".65"/>
+            <rect x="250" y="102" width="115" height="14" rx="7" fill="#E8711A" opacity=".55"/>
+            <rect x="250" y="134" width="115" height="14" rx="7" fill="#2457A4" opacity=".6"/>
+            <rect x="250" y="152" width="115" height="14" rx="7" fill="#2457A4" opacity=".5"/>
+            <text x="200" y="248" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="#5A6478">Cantilever Rack – Pipe Storage</text>
+          </svg>
+        </div>
+        <div class="overlay">
+          <span class="overlay-tag">Heavy Duty</span>
+          <h4>Cantilever Pipe Storage</h4>
+          <p>Steel pipe and bar facility</p>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+
+      <!-- PROJECT items -->
+      <div class="gallery-item" data-cat="project" data-title="KL Warehouse – Full Fit-Out" data-desc="Complete warehouse racking fit-out for a logistics company in Kuala Lumpur. Included site visit, planning, and installation." data-tag="Installed Project" onclick="openLightbox(8)">
+        <div class="placeholder-img">
+          <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="320" fill="#EAF0FB"/>
+            <!-- Multi-bay warehouse -->
+            <rect x="10" y="10" width="14" height="285" rx="3" fill="#1A3C6E"/>
+            <rect x="140" y="10" width="14" height="285" rx="3" fill="#1A3C6E"/>
+            <rect x="260" y="10" width="14" height="285" rx="3" fill="#1A3C6E"/>
+            <rect x="376" y="10" width="14" height="285" rx="3" fill="#1A3C6E"/>
+            <rect x="10" y="22" width="380" height="10" rx="3" fill="#2457A4"/>
+            <rect x="10" y="98" width="380" height="10" rx="3" fill="#2457A4"/>
+            <rect x="10" y="174" width="380" height="10" rx="3" fill="#2457A4"/>
+            <rect x="10" y="250" width="380" height="10" rx="3" fill="#2457A4"/>
+            <rect x="10" y="288" width="380" height="10" rx="3" fill="#1A3C6E"/>
+            <!-- Bay 1 pallets -->
+            <rect x="24" y="38" width="56" height="54" rx="4" fill="#E8711A" opacity=".6"/>
+            <rect x="84" y="38" width="56" height="54" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="24" y="114" width="56" height="54" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="84" y="114" width="56" height="54" rx="4" fill="#E8711A" opacity=".55"/>
+            <rect x="24" y="190" width="56" height="54" rx="4" fill="#E8711A" opacity=".55"/>
+            <rect x="84" y="190" width="56" height="54" rx="4" fill="#2457A4" opacity=".6"/>
+            <!-- Bay 2 pallets -->
+            <rect x="154" y="38" width="56" height="54" rx="4" fill="#2457A4" opacity=".65"/>
+            <rect x="214" y="38" width="56" height="54" rx="4" fill="#E8711A" opacity=".6"/>
+            <rect x="154" y="114" width="56" height="54" rx="4" fill="#E8711A" opacity=".55"/>
+            <rect x="214" y="114" width="56" height="54" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="154" y="190" width="56" height="54" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="214" y="190" width="56" height="54" rx="4" fill="#E8711A" opacity=".6"/>
+            <!-- Bay 3 pallets -->
+            <rect x="274" y="38" width="56" height="54" rx="4" fill="#E8711A" opacity=".65"/>
+            <rect x="334" y="38" width="46" height="54" rx="4" fill="#2457A4" opacity=".6"/>
+            <rect x="274" y="114" width="56" height="54" rx="4" fill="#2457A4" opacity=".55"/>
+            <rect x="334" y="114" width="46" height="54" rx="4" fill="#E8711A" opacity=".6"/>
+            <rect x="274" y="190" width="56" height="54" rx="4" fill="#E8711A" opacity=".6"/>
+            <rect x="334" y="190" width="46" height="54" rx="4" fill="#2457A4" opacity=".65"/>
+            <!-- Project badge -->
+            <rect x="130" y="260" width="140" height="22" rx="11" fill="#1A3C6E" opacity=".15"/>
+            <text x="200" y="276" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#1A3C6E" font-weight="700">✓ COMPLETED PROJECT</text>
+            <text x="200" y="308" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="#5A6478">KL Warehouse Full Fit-Out</text>
+          </svg>
+        </div>
+        <div class="overlay">
+          <span class="overlay-tag">Installed Project</span>
+          <h4>KL Warehouse Full Fit-Out</h4>
+          <p>Logistics company, Kuala Lumpur</p>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+
+      <div class="gallery-item" data-cat="project" data-title="Retail Shop – Gondola Setup" data-desc="New retail shop outfitted with 12 bays of gondola shelving and 3 end-cap displays. Completed in 2 days." data-tag="Installed Project" onclick="openLightbox(9)">
+        <div class="placeholder-img">
+          <svg viewBox="0 0 400 270" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="270" fill="#FFF3E8"/>
+            <rect x="20" y="10" width="360" height="4" rx="2" fill="#C45A0E" opacity=".4"/>
+            <!-- 3 gondola bays -->
+            <rect x="30" y="30" width="100" height="200" rx="6" fill="none" stroke="#E8711A" stroke-width="2"/>
+            <rect x="150" y="30" width="100" height="200" rx="6" fill="none" stroke="#E8711A" stroke-width="2"/>
+            <rect x="270" y="30" width="100" height="200" rx="6" fill="none" stroke="#E8711A" stroke-width="2"/>
+            <rect x="30" y="30" width="100" height="8" rx="3" fill="#E8711A"/>
+            <rect x="30" y="80" width="100" height="8" rx="3" fill="#E8711A"/>
+            <rect x="30" y="130" width="100" height="8" rx="3" fill="#E8711A"/>
+            <rect x="30" y="180" width="100" height="8" rx="3" fill="#E8711A"/>
+            <rect x="150" y="30" width="100" height="8" rx="3" fill="#E8711A"/>
+            <rect x="150" y="80" width="100" height="8" rx="3" fill="#E8711A"/>
+            <rect x="150" y="130" width="100" height="8" rx="3" fill="#E8711A"/>
+            <rect x="150" y="180" width="100" height="8" rx="3" fill="#E8711A"/>
+            <rect x="270" y="30" width="100" height="8" rx="3" fill="#E8711A"/>
+            <rect x="270" y="80" width="100" height="8" rx="3" fill="#E8711A"/>
+            <rect x="270" y="130" width="100" height="8" rx="3" fill="#E8711A"/>
+            <rect x="270" y="180" width="100" height="8" rx="3" fill="#E8711A"/>
+            <!-- Products in bays -->
+            <rect x="38" y="42" width="18" height="34" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="60" y="40" width="18" height="36" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="82" y="42" width="18" height="34" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="104" y="40" width="18" height="36" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="38" y="92" width="18" height="34" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="60" y="90" width="18" height="36" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="82" y="92" width="18" height="34" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="104" y="90" width="18" height="36" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="158" y="42" width="18" height="34" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="180" y="40" width="18" height="36" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="202" y="42" width="18" height="34" rx="2" fill="#E8711A" opacity=".55"/>
+            <rect x="224" y="40" width="18" height="36" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="278" y="42" width="18" height="34" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="300" y="40" width="18" height="36" rx="2" fill="#E8711A" opacity=".6"/>
+            <rect x="322" y="42" width="18" height="34" rx="2" fill="#2457A4" opacity=".55"/>
+            <rect x="344" y="40" width="18" height="36" rx="2" fill="#E8711A" opacity=".6"/>
+            <!-- Checkmark badge -->
+            <circle cx="200" cy="220" r="18" fill="#22C55E" opacity=".9"/>
+            <text x="200" y="226" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="16" fill="white" font-weight="700">✓</text>
+            <text x="200" y="258" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="#5A6478">Retail Shop Gondola Installation</text>
+          </svg>
+        </div>
+        <div class="overlay">
+          <span class="overlay-tag">Installed Project</span>
+          <h4>Retail Shop Gondola Setup</h4>
+          <p>12 bays + 3 end-caps, 2-day install</p>
+        </div>
+        <div class="zoom-icon">🔍</div>
+      </div>
+
+      <!-- Upload placeholder -->
+      <div class="upload-card">
+        <div class="upload-icon">📷</div>
+        <h4>More Photos Coming Soon</h4>
+        <p>We're uploading real project photos. Check back soon or contact us to see more of our work.</p>
+      </div>
+
+    </div><!-- /gallery-grid -->
+  </div>
+</section>
+
+<!-- ══════════ LIGHTBOX ══════════ -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+  <div class="lightbox-inner" id="lightboxInner">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <button class="lightbox-nav lb-prev" onclick="changeSlide(-1)">‹</button>
+    <button class="lightbox-nav lb-next" onclick="changeSlide(1)">›</button>
+    <div class="lightbox-img" id="lightboxImg"></div>
+    <div class="lightbox-body">
+      <span class="lb-tag" id="lbTag"></span>
+      <h3 id="lbTitle"></h3>
+      <p id="lbDesc"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CTA ══════════ -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Like What You See?</h2>
+    <p>Get in touch for a free consultation and quote. We'll help you design the perfect storage solution for your space.</p>
+    <div class="cta-btns">
+      <a href="index.html#contact" class="btn-white">Get a Free Quote</a>
+      <a href="products.html" class="btn-outline-white">View All Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="container footer-bottom">
+    <span>© 2026 Top Space Ventures. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  const toggle = document.getElementById('navToggle');
+  const navbar = document.getElementById('navbar');
+  toggle.addEventListener('click', () => navbar.classList.toggle('open'));
+  document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => navbar.classList.remove('open')));
+
+  // Gather gallery items for lightbox
+  const items = [...document.querySelectorAll('.gallery-item[data-cat]')];
+
+  // Filter
+  const counts = { all: 10, boltless: 3, gondola: 3, heavy: 2, project: 2 };
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.gallery-item, .upload-card').forEach(el => {
+        if (f === 'all') { el.style.display = ''; }
+        else if (el.classList.contains('upload-card')) { el.style.display = 'none'; }
+        else { el.style.display = el.dataset.cat === f ? '' : 'none'; }
+      });
+      document.getElementById('filterCount').textContent =
+        `Showing ${counts[f]} item${counts[f] !== 1 ? 's' : ''}`;
+    });
+  });
+
+  // Lightbox
+  let current = 0;
+  function openLightbox(idx) {
+    current = idx;
+    showSlide();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function showSlide() {
+    const item = items[current];
+    document.getElementById('lightboxImg').innerHTML = item.querySelector('.placeholder-img').innerHTML;
+    document.getElementById('lbTag').textContent = item.dataset.tag;
+    document.getElementById('lbTitle').textContent = item.dataset.title;
+    document.getElementById('lbDesc').textContent = item.dataset.desc;
+  }
+  function changeSlide(dir) {
+    current = (current + dir + items.length) % items.length;
+    showSlide();
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeLightboxOutside(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') changeSlide(-1);
+    if (e.key === 'ArrowRight') changeSlide(1);
+  });
+
+  // Scroll nav shadow
+  window.addEventListener('scroll', () => {
+    navbar.style.boxShadow = window.scrollY > 10 ? '0 4px 24px rgba(0,0,0,.35)' : '0 2px 12px rgba(0,0,0,.25)';
+  });
+</script>
+</body>
+</html>
