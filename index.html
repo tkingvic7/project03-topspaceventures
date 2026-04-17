@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Top Space Ventures – Storage Racking Solutions</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon_32.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon_64.png" />
   <style>
     /* ── Reset & Base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,8 +63,8 @@
     }
     .nav-logo { display: flex; align-items: center; gap: 12px; }
     .nav-logo .logo-mark {
-      width: 42px; height: 42px; background: var(--orange); border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
+      width: 42px; height: 42px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
     .nav-logo .logo-mark svg { width: 24px; height: 24px; fill: var(--white); }
     .nav-logo .logo-text { color: var(--white); font-weight: 800; font-size: 1.15rem; line-height: 1.1; }
@@ -292,11 +295,9 @@
 <!-- ══════════════ NAV ══════════════ -->
 <nav id="navbar">
   <div class="container nav-inner">
-    <a href="#" class="nav-logo">
+    <a href="index.html" class="nav-logo">
       <div class="logo-mark">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 3h18v3H3V3zm0 5h18v2H3V8zm0 4h18v2H3v-2zm0 4h12v2H3v-2zm14 1l4-4v8l-4-4z"/>
-        </svg>
+        <img src="favicon_64.png" alt="Top Space Ventures" style="width:42px;height:42px;border-radius:6px;display:block;" />
       </div>
       <div class="logo-text">
         Top Space Ventures
@@ -416,7 +417,22 @@
 
       <!-- Card 1 -->
       <div class="product-card">
-        <div class="product-card-img card-blue">🗄️</div>
+        <div class="product-card-img card-blue">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+            <rect x="8" y="6" width="6" height="52" rx="2" fill="#2457A4"/>
+            <rect x="50" y="6" width="6" height="52" rx="2" fill="#2457A4"/>
+            <rect x="8" y="10" width="48" height="6" rx="2" fill="#1A3C6E"/>
+            <rect x="8" y="27" width="48" height="6" rx="2" fill="#1A3C6E"/>
+            <rect x="8" y="44" width="48" height="6" rx="2" fill="#1A3C6E"/>
+            <rect x="8" y="54" width="48" height="4" rx="2" fill="#1A3C6E"/>
+            <rect x="15" y="17" width="12" height="8" rx="2" fill="#E8711A" opacity=".8"/>
+            <rect x="30" y="16" width="10" height="9" rx="2" fill="#2457A4" opacity=".7"/>
+            <rect x="43" y="17" width="10" height="8" rx="2" fill="#E8711A" opacity=".7"/>
+            <rect x="15" y="34" width="10" height="8" rx="2" fill="#2457A4" opacity=".7"/>
+            <rect x="28" y="33" width="13" height="9" rx="2" fill="#E8711A" opacity=".8"/>
+            <rect x="44" y="34" width="9" height="8" rx="2" fill="#2457A4" opacity=".7"/>
+          </svg>
+        </div>
         <div class="product-card-body">
           <h3>Boltless Shelving Rack</h3>
           <p>Easy assembly without tools. Perfect for warehouses, storerooms, offices, and retail back-of-house. Durable steel construction with adjustable shelf heights.</p>
@@ -428,7 +444,27 @@
 
       <!-- Card 2 -->
       <div class="product-card">
-        <div class="product-card-img card-orange">🏪</div>
+        <div class="product-card-img card-orange">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+            <rect x="30" y="4" width="4" height="56" rx="2" fill="#1A3C6E"/>
+            <rect x="6" y="4" width="3" height="56" rx="2" fill="#C45A0E"/>
+            <rect x="55" y="4" width="3" height="56" rx="2" fill="#C45A0E"/>
+            <rect x="6" y="10" width="24" height="4" rx="1" fill="#E8711A"/>
+            <rect x="6" y="24" width="24" height="4" rx="1" fill="#E8711A"/>
+            <rect x="6" y="38" width="24" height="4" rx="1" fill="#E8711A"/>
+            <rect x="6" y="52" width="24" height="4" rx="1" fill="#E8711A"/>
+            <rect x="34" y="10" width="24" height="4" rx="1" fill="#E8711A"/>
+            <rect x="34" y="24" width="24" height="4" rx="1" fill="#E8711A"/>
+            <rect x="34" y="38" width="24" height="4" rx="1" fill="#E8711A"/>
+            <rect x="34" y="52" width="24" height="4" rx="1" fill="#E8711A"/>
+            <rect x="9" y="15" width="6" height="8" rx="1" fill="#2457A4" opacity=".7"/>
+            <rect x="17" y="14" width="5" height="9" rx="1" fill="#E8711A" opacity=".7"/>
+            <rect x="24" y="15" width="5" height="8" rx="1" fill="#2457A4" opacity=".7"/>
+            <rect x="37" y="15" width="6" height="8" rx="1" fill="#E8711A" opacity=".7"/>
+            <rect x="45" y="14" width="5" height="9" rx="1" fill="#2457A4" opacity=".7"/>
+            <rect x="52" y="15" width="5" height="8" rx="1" fill="#E8711A" opacity=".7"/>
+          </svg>
+        </div>
         <div class="product-card-body">
           <h3>Gondola Shelving</h3>
           <p>Double-sided retail display shelving ideal for supermarkets, pharmacies, convenience stores, and boutique shops. Fully configurable panels and accessories.</p>
@@ -440,7 +476,21 @@
 
       <!-- Card 3 -->
       <div class="product-card">
-        <div class="product-card-img card-dark">🏗️</div>
+        <div class="product-card-img card-dark">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+            <rect x="5" y="6" width="5" height="52" rx="2" fill="#1A3C6E"/>
+            <rect x="54" y="6" width="5" height="52" rx="2" fill="#1A3C6E"/>
+            <line x1="10" y1="10" x2="54" y2="32" stroke="#1A3C6E" stroke-width="1.5" opacity=".3"/>
+            <line x1="10" y1="32" x2="54" y2="10" stroke="#1A3C6E" stroke-width="1.5" opacity=".3"/>
+            <rect x="5" y="12" width="54" height="6" rx="2" fill="#2457A4"/>
+            <rect x="5" y="30" width="54" height="6" rx="2" fill="#2457A4"/>
+            <rect x="5" y="48" width="54" height="6" rx="2" fill="#2457A4"/>
+            <rect x="8" y="20" width="20" height="9" rx="2" fill="#E8711A" opacity=".7"/>
+            <rect x="32" y="20" width="22" height="9" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="8" y="38" width="22" height="9" rx="2" fill="#2457A4" opacity=".6"/>
+            <rect x="34" y="38" width="20" height="9" rx="2" fill="#E8711A" opacity=".7"/>
+          </svg>
+        </div>
         <div class="product-card-body">
           <h3>Heavy Duty Racking</h3>
           <p>Industrial-grade pallet racking and high-load shelving systems designed for large warehouses, logistics centres, and commercial facilities.</p>
@@ -492,7 +542,20 @@
       </div>
     </div>
     <div class="how-visual">
-      <div class="big-icon">🏢</div>
+      <div class="big-icon">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+          <rect x="8" y="20" width="48" height="38" rx="3" fill="#2457A4" opacity=".3"/>
+          <rect x="4" y="16" width="56" height="6" rx="2" fill="#E8711A"/>
+          <rect x="14" y="28" width="10" height="10" rx="1" fill="white" opacity=".7"/>
+          <rect x="30" y="28" width="10" height="10" rx="1" fill="white" opacity=".7"/>
+          <rect x="46" y="28" width="10" height="10" rx="1" fill="white" opacity=".7"/>
+          <rect x="14" y="44" width="10" height="10" rx="1" fill="white" opacity=".7"/>
+          <rect x="30" y="44" width="10" height="10" rx="1" fill="white" opacity=".7"/>
+          <rect x="46" y="44" width="10" height="10" rx="1" fill="white" opacity=".7"/>
+          <rect x="26" y="36" width="12" height="22" rx="1" fill="white" opacity=".9"/>
+          <rect x="2" y="58" width="60" height="4" rx="2" fill="#E8711A"/>
+        </svg>
+      </div>
       <h3>Project Tender Support</h3>
       <p>We assist businesses and contractors in preparing full project tenders for large-scale racking installations — including technical drawings, load specifications, and compliance documentation.</p>
       <div class="cta-note">
@@ -513,32 +576,32 @@
       <p class="section-sub">We're more than a supplier — we're your storage partner from planning to after-sales support.</p>
       <div class="why-features">
         <div class="feature-card">
-          <div class="feature-icon">🔩</div>
+          <div class="feature-icon"><svg viewBox="0 0 32 32" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="5" fill="#E8711A"/><rect x="14" y="2" width="4" height="8" rx="2" fill="#1A3C6E"/><rect x="14" y="22" width="4" height="8" rx="2" fill="#1A3C6E"/><rect x="2" y="14" width="8" height="4" rx="2" fill="#1A3C6E"/><rect x="22" y="14" width="8" height="4" rx="2" fill="#1A3C6E"/><rect x="5.5" y="5.5" width="4" height="4" rx="1" fill="#2457A4" transform="rotate(45 5.5 5.5)"/><rect x="22.5" y="5.5" width="4" height="4" rx="1" fill="#2457A4" transform="rotate(45 22.5 5.5)"/><rect x="5.5" y="22.5" width="4" height="4" rx="1" fill="#2457A4" transform="rotate(45 5.5 22.5)"/><rect x="22.5" y="22.5" width="4" height="4" rx="1" fill="#2457A4" transform="rotate(45 22.5 22.5)"/></svg></div>
           <h4>Quality Materials</h4>
           <p>Premium steel racks tested for load capacity and longevity.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">📐</div>
+          <div class="feature-icon"><svg viewBox="0 0 32 32" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 28L28 4" stroke="#1A3C6E" stroke-width="2.5" stroke-linecap="round"/><path d="M4 28L4 20M4 28L12 28" stroke="#E8711A" stroke-width="2.5" stroke-linecap="round"/><rect x="10" y="6" width="16" height="16" rx="2" stroke="#2457A4" stroke-width="2" fill="none"/><line x1="10" y1="11" x2="14" y2="11" stroke="#2457A4" stroke-width="1.5"/><line x1="10" y1="16" x2="14" y2="16" stroke="#2457A4" stroke-width="1.5"/><line x1="15" y1="22" x2="15" y2="18" stroke="#2457A4" stroke-width="1.5"/><line x1="20" y1="22" x2="20" y2="18" stroke="#2457A4" stroke-width="1.5"/></svg></div>
           <h4>Custom Sizing</h4>
           <p>Tailored dimensions to make the most of every square foot.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🚚</div>
+          <div class="feature-icon"><svg viewBox="0 0 32 32" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="10" width="18" height="12" rx="2" fill="#2457A4"/><path d="M20 14h6l4 5v3h-10V14z" fill="#1A3C6E"/><circle cx="8" cy="24" r="3" fill="#E8711A"/><circle cx="24" cy="24" r="3" fill="#E8711A"/><circle cx="8" cy="24" r="1.2" fill="white"/><circle cx="24" cy="24" r="1.2" fill="white"/><rect x="4" y="13" width="8" height="5" rx="1" fill="white" opacity=".4"/></svg></div>
           <h4>Reliable Delivery</h4>
           <p>On-time fulfillment for both small orders and large projects.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🤝</div>
+          <div class="feature-icon"><svg viewBox="0 0 32 32" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20c0-4 3-7 7-7h2l3 3 3-3h2c4 0 7 3 7 7" stroke="#1A3C6E" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="16" cy="9" r="4" fill="#2457A4"/><path d="M10 20l3 4 3-2 3 2 3-4" stroke="#E8711A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
           <h4>After-Sales Support</h4>
           <p>We're here after installation for maintenance, add-ons, and advice.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">💼</div>
+          <div class="feature-icon"><svg viewBox="0 0 32 32" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="12" width="24" height="16" rx="2" fill="#2457A4"/><path d="M11 12V9a5 5 0 0110 0v3" stroke="#1A3C6E" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="13" y="18" width="6" height="4" rx="1" fill="#E8711A"/><line x1="4" y1="19" x2="13" y2="19" stroke="white" stroke-width="1.5" opacity=".5"/><line x1="19" y1="19" x2="28" y2="19" stroke="white" stroke-width="1.5" opacity=".5"/></svg></div>
           <h4>SME Friendly</h4>
           <p>Flexible pricing and packages designed for small and medium businesses.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">📋</div>
+          <div class="feature-icon"><svg viewBox="0 0 32 32" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="3" width="20" height="26" rx="2" fill="#EAF0FB" stroke="#2457A4" stroke-width="2"/><line x1="10" y1="10" x2="22" y2="10" stroke="#1A3C6E" stroke-width="1.5" stroke-linecap="round"/><line x1="10" y1="15" x2="22" y2="15" stroke="#1A3C6E" stroke-width="1.5" stroke-linecap="round"/><line x1="10" y1="20" x2="16" y2="20" stroke="#1A3C6E" stroke-width="1.5" stroke-linecap="round"/><circle cx="22" cy="23" r="5" fill="#E8711A"/><path d="M19.5 23l2 2 3-3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <h4>Tender Ready</h4>
           <p>Full documentation support for project tenders and compliance needs.</p>
         </div>
@@ -601,28 +664,28 @@
       <p>Whether it's a single rack or a full warehouse project, our team is ready to help. Reach out today for a free consultation and quotation.</p>
 
       <div class="contact-detail">
-        <div class="contact-detail-icon">📞</div>
+        <div class="contact-detail-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="white"/></svg></div>
         <div>
           <h4>Phone / WhatsApp</h4>
           <p>+60 12-345 6789</p>
         </div>
       </div>
       <div class="contact-detail">
-        <div class="contact-detail-icon">📧</div>
+        <div class="contact-detail-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2" stroke="white" stroke-width="2" fill="none"/><path d="M2 7l10 7 10-7" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
         <div>
           <h4>Email</h4>
           <p>enquiry@topspaceventures.com</p>
         </div>
       </div>
       <div class="contact-detail">
-        <div class="contact-detail-icon">📍</div>
+        <div class="contact-detail-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.7 2 6 4.7 6 8c0 5 6 13 6 13s6-8 6-13c0-3.3-2.7-6-6-6z" fill="white"/><circle cx="12" cy="8" r="2.5" fill="#E8711A"/></svg></div>
         <div>
           <h4>Location</h4>
           <p>Kuala Lumpur & Selangor, Malaysia<br>Nationwide delivery available</p>
         </div>
       </div>
       <div class="contact-detail">
-        <div class="contact-detail-icon">🕐</div>
+        <div class="contact-detail-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2" fill="none"/><path d="M12 7v5l3 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div>
           <h4>Operating Hours</h4>
           <p>Mon – Fri: 9am – 6pm<br>Sat: 9am – 1pm</p>
@@ -675,9 +738,7 @@
       <div class="footer-brand">
         <div class="nav-logo">
           <div class="logo-mark">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 3h18v3H3V3zm0 5h18v2H3V8zm0 4h18v2H3v-2zm0 4h12v2H3v-2zm14 1l4-4v8l-4-4z"/>
-            </svg>
+            <img src="favicon_64.png" alt="Top Space Ventures" style="width:42px;height:42px;border-radius:6px;display:block;" />
           </div>
           <div class="logo-text" style="color:#fff">
             Top Space Ventures
